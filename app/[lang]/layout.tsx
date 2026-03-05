@@ -21,10 +21,10 @@ export default function LangLayout({ children, params }: { children: React.React
   return (
     <AccessibilityProvider>
       <HtmlLanguageSync lang={lang} />
-      <div dir={lang === 'he' ? 'rtl' : 'ltr'} className="min-h-screen bg-[#07070d] text-slate-100">
+      <div dir={lang === 'he' ? 'rtl' : 'ltr'} className="min-h-screen bg-[#05070f] text-slate-100">
         <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4">
-            <Link href={withLang(lang)} className="text-xl font-bold text-cyan-200">
+            <Link href={withLang(lang)} className="text-xl font-bold text-cyan-100">
               {dictionary.siteName}
             </Link>
             <nav aria-label="Main navigation" className="flex items-center gap-4 text-sm font-medium text-slate-200">

@@ -28,7 +28,7 @@ export default function ServicePage({ params }: { params: { lang: string; servic
 
   return (
     <article className="space-y-8">
-      <header className="rounded-2xl bg-brand-900 p-8 text-white">
+      <header className="card p-8 text-white">
         <h1 className="text-3xl font-bold">{service.title}</h1>
         <p className="mt-3 text-blue-100">{service.offer}</p>
       </header>
@@ -50,14 +50,14 @@ export default function ServicePage({ params }: { params: { lang: string; servic
       <section>
         <h2 className="text-2xl font-semibold">{dictionary.servicePage.technologiesTitle}</h2>
         <div className="mt-3 flex flex-wrap gap-2">
-          {service.technologies.map((item) => <span className="rounded-full bg-brand-50 px-3 py-1" key={item}>{item}</span>)}
+          {service.technologies.map((item) => <span className="card rounded-full px-3 py-1" key={item}>{item}</span>)}
         </div>
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold">{dictionary.servicePage.demoTitle}</h2>
         {/* Replace this placeholder with real screenshots or live embeds */}
-        <div className="mt-3 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-slate-500">
+        <div className="card mt-3 border-dashed p-8 text-slate-300">
           Demo block placeholder for {service.title} interface.
         </div>
       </section>
@@ -66,14 +66,14 @@ export default function ServicePage({ params }: { params: { lang: string; servic
         <h2 className="text-2xl font-semibold">{dictionary.servicePage.stepsTitle}</h2>
         <ol className="mt-3 grid gap-3 md:grid-cols-2">
           {service.steps.map((step, i) => (
-            <li key={step} className="rounded-xl border border-slate-200 bg-white p-4">{i + 1}. {step}</li>
+            <li key={step} className="card p-4">{i + 1}. {step}</li>
           ))}
         </ol>
       </section>
 
-      <section className="rounded-2xl border border-brand-100 bg-brand-50 p-6">
-        <p className="text-xl font-semibold">{dictionary.servicePage.priceFromLabel}: {service.priceFrom}</p>
-        <Link href={`/${lang}/contact`} className="mt-4 inline-flex rounded-full bg-brand-700 px-5 py-2 text-white">
+      <section className="card p-6">
+        <p className="text-xl font-semibold">{dictionary.servicePage.priceFromLabel}: <span className="price-highlight">{service.priceFrom}</span></p>
+        <Link href={`/${lang}/contact`} className="primary-btn mt-4 inline-flex">
           {dictionary.servicePage.cta}
         </Link>
       </section>

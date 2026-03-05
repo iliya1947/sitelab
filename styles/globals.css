@@ -7,7 +7,97 @@
 }
 
 body {
-  @apply bg-[#07070d] text-slate-100 antialiased;
+  @apply bg-[#05070f] text-slate-100 antialiased;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(34, 211, 238, 0.08), transparent 42%),
+    radial-gradient(circle at 88% 12%, rgba(139, 92, 246, 0.1), transparent 40%),
+    linear-gradient(180deg, #05070f 0%, #0b1020 52%, #111827 100%);
+}
+
+section {
+  position: relative;
+}
+
+section::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+}
+
+section:last-child::after {
+  display: none;
+}
+
+.card {
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  transition: all 0.25s ease;
+}
+
+.card:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+  transform: translateY(-4px);
+}
+
+input:not([type='checkbox']):not([type='radio']):not([type='range']),
+select,
+textarea {
+  background: rgba(10, 14, 28, 0.85);
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+input:not([type='checkbox']):not([type='radio']):not([type='range'])::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+input:not([type='checkbox']):not([type='radio']):not([type='range']):focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.primary-btn {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  color: white;
+  border-radius: 10px;
+  padding: 10px 18px;
+  transition: all 0.2s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+}
+
+.price-highlight {
+  background: linear-gradient(90deg, #22d3ee, #8b5cf6);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 600;
+}
+
+input[type='range'] {
+  accent-color: #22d3ee;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .primary-btn {
+    transition: none;
+    transform: none;
+  }
 }
 
 html.a11y-high-contrast {
@@ -29,4 +119,8 @@ html.a11y-reduce-motion *::after {
 @keyframes floatY {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
+}
+
+input[type='checkbox'] {
+  accent-color: #3b82f6;
 }

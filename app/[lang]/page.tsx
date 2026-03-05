@@ -31,7 +31,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
         <h2 className="text-2xl font-semibold">{dictionary.audiences.title}</h2>
         <ul className="mt-4 grid gap-3 md:grid-cols-2">
           {dictionary.audiences.items.map((item) => (
-            <li key={item} className="rounded-xl border border-slate-200 bg-white p-4">{item}</li>
+            <li key={item} className="card p-4">{item}</li>
           ))}
         </ul>
       </section>
@@ -39,7 +39,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
       <section>
         <div className="mb-5 flex items-center justify-between gap-4">
           <h2 className="text-2xl font-semibold">{dictionary.servicesSection.title}</h2>
-          <Link href={withLang(lang, '/services')} className="font-medium text-brand-700">
+          <Link href={withLang(lang, '/services')} className="font-medium text-cyan-300 hover:text-cyan-200">
             {dictionary.servicesSection.cta}
           </Link>
         </div>
@@ -52,7 +52,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
         <h2 className="text-2xl font-semibold">{dictionary.whyUs.title}</h2>
         <ul className="mt-4 grid gap-3 md:grid-cols-2">
           {dictionary.whyUs.points.map((point) => (
-            <li key={point} className="rounded-xl border border-slate-200 bg-white p-4">{point}</li>
+            <li key={point} className="card p-4">{point}</li>
           ))}
         </ul>
       </section>
@@ -61,7 +61,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
         <h2 className="text-2xl font-semibold">{dictionary.stack.title}</h2>
         <div className="mt-4 flex flex-wrap gap-3">
           {dictionary.stack.items.map((item) => (
-            <span key={item} className="rounded-full border border-brand-100 bg-brand-50 px-4 py-2 text-brand-900">{item}</span>
+            <span key={item} className="card rounded-full px-4 py-2 text-slate-200">{item}</span>
           ))}
         </div>
       </section>
@@ -71,7 +71,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
 
       <section>
         <h2 className="text-2xl font-semibold">{dictionary.contact.title}</h2>
-        <p className="mt-2 text-slate-600">{dictionary.contact.subtitle}</p>
+        <p className="mt-2 text-slate-300">{dictionary.contact.subtitle}</p>
         <div className="mt-4">
           <ContactForm labels={dictionary.contact} />
         </div>
