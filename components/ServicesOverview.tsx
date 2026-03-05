@@ -1,4 +1,7 @@
+'use client';
+
 import ServiceCard from '@/components/ServiceCard';
+import { useTranslations } from '@/hooks/useTranslations';
 import { Lang, getDictionary } from '@/lib/i18n';
 import { withLang } from '@/lib/routes';
 
@@ -10,6 +13,7 @@ type ServicesOverviewProps = {
 export default function ServicesOverview({ lang, compact = false }: ServicesOverviewProps) {
   const dictionary = getDictionary(lang);
   const services = compact ? dictionary.services.slice(0, 3) : dictionary.services;
+  const t = useTranslations();
 
   return (
     <section className="section-glow">
@@ -21,6 +25,7 @@ export default function ServicesOverview({ lang, compact = false }: ServicesOver
             title={service.title}
             description={service.shortDescription}
             href={withLang(lang, `/services/${service.slug}`)}
+            learnMoreLabel={t.services.learnMore}
             index={index}
           />
         ))}
