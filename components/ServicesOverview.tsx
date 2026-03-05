@@ -14,13 +14,14 @@ export default function ServicesOverview({ lang, compact = false }: ServicesOver
   return (
     <section className="section-glow">
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        {services.map((service) => (
+        {services.map((service, index) => (
           <ServiceCard
             key={service.slug}
             icon={service.icon}
             title={service.title}
             description={service.shortDescription}
             href={withLang(lang, `/services/${service.slug}`)}
+            index={index}
           />
         ))}
       </div>
