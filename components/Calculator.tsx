@@ -42,12 +42,12 @@ export default function Calculator({ labels }: { labels: Labels }) {
   }, [siteType, pages, multilingual, store, seo, urgent]);
 
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-card">
+    <section className="card rounded-3xl p-6 shadow-card transition hover:border-blue-400/60 hover:shadow-[0_0_36px_rgba(59,130,246,0.28)]">
       <h2 className="text-2xl font-semibold">{labels.title}</h2>
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <label className="flex flex-col gap-2">
           <span>{labels.fields.siteType}</span>
-          <select className="rounded-xl border border-slate-300 p-2" value={siteType} onChange={(e) => setSiteType(e.target.value as keyof typeof baseByType)}>
+          <select value={siteType} onChange={(e) => setSiteType(e.target.value as keyof typeof baseByType)}>
             <option value="landing">Landing</option>
             <option value="corporate">Corporate</option>
             <option value="ecommerce">E-commerce</option>
@@ -67,9 +67,9 @@ export default function Calculator({ labels }: { labels: Labels }) {
       </div>
 
       <p className="mt-6 text-xl font-semibold">
-        {labels.estimateLabel}: <span className="text-brand-700">${estimate}</span>
+        {labels.estimateLabel}: <span className="price-highlight">${estimate}</span>
       </p>
-      <button className="mt-4 rounded-full bg-brand-700 px-5 py-2 font-semibold text-white hover:bg-brand-900">{labels.submit}</button>
+      <button className="primary-btn mt-4 font-semibold">{labels.submit}</button>
     </section>
   );
 }

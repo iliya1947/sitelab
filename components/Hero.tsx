@@ -32,8 +32,8 @@ const floatingCards = [
 
 export default function Hero({ lang }: HeroProps) {
   return (
-    <section className="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0F] px-6 py-24 text-center text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-12">
-      <div className="absolute inset-0 -z-20 bg-[#0A0A0F]" />
+    <section className="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#05070f] px-6 py-24 text-center text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-12">
+      <div className="absolute inset-0 -z-20 bg-[#05070f]" />
       <div className="absolute inset-0 -z-10 hidden md:block">
         <CodeRainBackground />
       </div>
@@ -53,7 +53,7 @@ export default function Hero({ lang }: HeroProps) {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             href={withLang(lang, '/contact')}
-            className="rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 px-7 py-3 font-semibold text-slate-950 transition duration-300 hover:shadow-[0_0_28px_rgba(56,189,248,0.55)]"
+            className="primary-btn px-7 py-3 font-semibold text-white"
           >
             Get Your Project Estimate
           </Link>

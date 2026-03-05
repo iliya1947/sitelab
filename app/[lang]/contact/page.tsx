@@ -19,7 +19,7 @@ export default function ContactPage({ params }: { params: { lang: string } }) {
   return (
     <section className="max-w-2xl">
       <h1 className="text-3xl font-bold">{dictionary.contact.title}</h1>
-      <p className="mt-2 text-slate-600">{dictionary.contact.subtitle}</p>
+      <p className="mt-2 text-slate-300">{dictionary.contact.subtitle}</p>
       <div className="mt-6">
         <ContactForm labels={dictionary.contact} />
       </div>
