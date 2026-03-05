@@ -25,7 +25,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
 
   return (
     <>
-      <Hero lang={lang} title={dictionary.hero.title} subtitle={dictionary.hero.subtitle} cta={dictionary.hero.cta} />
+      <Hero lang={lang} />
 
       <section>
         <h2 className="text-2xl font-semibold">{dictionary.audiences.title}</h2>
