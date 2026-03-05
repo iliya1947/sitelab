@@ -1,13 +1,13 @@
 'use client';
 
-import { Lang } from '@/lib/i18n';
+import { Locale } from '@/src/i18n';
 import { withLang } from '@/lib/routes';
 import { useTranslations } from '@/hooks/useTranslations';
 import Link from 'next/link';
 import { CSSProperties, MouseEvent } from 'react';
 
 type HeroProps = {
-  lang: Lang;
+  lang: Locale;
 };
 
 

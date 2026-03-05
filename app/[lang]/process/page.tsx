@@ -1,20 +1,17 @@
 import ProcessSteps from '@/components/ProcessSteps';
-import { Lang, getDictionary, isLang } from '@/lib/i18n';
 import { buildMetadata } from '@/lib/seo';
+import { getDictionary, isLocale, Locale } from '@/src/i18n';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: { lang: string } }) {
-  if (!isLang(params.lang)) return {};
-  const lang = params.lang as Lang;
-  const dictionary = getDictionary(lang);
+  if (!isLocale(params.lang)) return {};
+  const lang = params.lang as Locale;
+  const dictionary = await getDictionary(lang);
 
-  return buildMetadata({ lang, title: `SiteLab | ${dictionary.nav.process}`, description: dictionary.processSection.title, path: '/process' });
+  return buildMetadata({ lang, title: `${dictionary.siteName} | ${dictionary.nav.process}`, description: dictionary.process.title, path: '/process' });
 }
 
 export default function ProcessPage({ params }: { params: { lang: string } }) {
-  if (!isLang(params.lang)) notFound();
-  const lang = params.lang as Lang;
-  const dictionary = getDictionary(lang);
-
-  return <ProcessSteps title={dictionary.processSection.title} steps={dictionary.processSection.steps} />;
+  if (!isLocale(params.lang)) notFound();
+  return <ProcessSteps />;
 }

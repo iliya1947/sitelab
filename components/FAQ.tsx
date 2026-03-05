@@ -1,13 +1,18 @@
-import Reveal from '@/components/Reveal';
+'use client';
 
-export default function FAQ({ title, items }: { title: string; items: { q: string; a: string }[] }) {
+import Reveal from '@/components/Reveal';
+import { useTranslations } from '@/hooks/useTranslations';
+
+export default function FAQ() {
+  const t = useTranslations();
+
   return (
     <section>
       <Reveal>
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t.faq.title}</h2>
       </Reveal>
       <div className="mt-6 space-y-4">
-        {items.map((item, index) => (
+        {t.faq.items.map((item, index) => (
           <Reveal key={item.q} delayMs={index * 70}>
             <details className="card p-6">
               <summary className="cursor-pointer font-medium">{item.q}</summary>
