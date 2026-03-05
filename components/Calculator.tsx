@@ -42,8 +42,8 @@ export default function Calculator({ labels }: { labels: Labels }) {
   }, [siteType, pages, multilingual, store, seo, urgent]);
 
   return (
-    <section className="card rounded-3xl p-6 shadow-card transition hover:border-blue-400/60 hover:shadow-[0_0_36px_rgba(59,130,246,0.28)]">
-      <h2 className="text-2xl font-semibold">{labels.title}</h2>
+    <section className="section-glow card rounded-3xl p-8 shadow-card transition hover:border-blue-400/60 hover:shadow-[0_0_36px_rgba(59,130,246,0.28)]">
+      <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{labels.title}</h2>
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <label className="flex flex-col gap-2">
           <span>{labels.fields.siteType}</span>
@@ -57,7 +57,7 @@ export default function Calculator({ labels }: { labels: Labels }) {
 
         <label className="flex flex-col gap-2">
           <span>{labels.fields.pages}: {pages}</span>
-          <input type="range" min={1} max={40} value={pages} onChange={(e) => setPages(Number(e.target.value))} />
+          <input className="transition duration-200" type="range" min={1} max={40} value={pages} onChange={(e) => setPages(Number(e.target.value))} />
         </label>
 
         <label className="flex items-center gap-3"><input type="checkbox" checked={multilingual} onChange={(e) => setMultilingual(e.target.checked)} /> {labels.fields.multilingual}</label>
@@ -66,10 +66,10 @@ export default function Calculator({ labels }: { labels: Labels }) {
         <label className="flex items-center gap-3"><input type="checkbox" checked={urgent} onChange={(e) => setUrgent(e.target.checked)} /> {labels.fields.urgency}</label>
       </div>
 
-      <p className="mt-6 text-xl font-semibold">
-        {labels.estimateLabel}: <span className="price-highlight">${estimate}</span>
+      <p className="mt-8 rounded-2xl border border-cyan-300/20 bg-slate-950/70 px-4 py-4 text-xl font-semibold md:text-2xl">
+        {labels.estimateLabel}: <span className="price-highlight text-3xl">${estimate}</span>
       </p>
-      <button className="primary-btn mt-4 font-semibold">{labels.submit}</button>
+      <button className="primary-btn mt-6 font-semibold">{labels.submit}</button>
     </section>
   );
 }

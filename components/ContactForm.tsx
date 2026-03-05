@@ -12,7 +12,7 @@ export default function ContactForm({ labels }: { labels: { submit: string; name
   };
 
   return (
-    <form onSubmit={onSubmit} className="card space-y-4 p-6 shadow-card">
+    <form onSubmit={onSubmit} className="card space-y-5 p-8 shadow-card">
       <label className="block">
         <span>{labels.name}</span>
         <input required name="name" className="mt-1 w-full" placeholder={labels.name} />

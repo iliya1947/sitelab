@@ -12,7 +12,7 @@ export default function ServicesOverview({ lang, compact = false }: ServicesOver
   const services = compact ? dictionary.services.slice(0, 3) : dictionary.services;
 
   return (
-    <section>
+    <section className="section-glow">
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         {services.map((service) => (
           <ServiceCard

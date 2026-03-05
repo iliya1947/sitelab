@@ -28,17 +28,17 @@ export default function HomePage({ params }: { params: { lang: string } }) {
       <Hero lang={lang} />
 
       <section>
-        <h2 className="text-2xl font-semibold">{dictionary.audiences.title}</h2>
-        <ul className="mt-4 grid gap-3 md:grid-cols-2">
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.audiences.title}</h2>
+        <ul className="mt-6 grid gap-4 md:grid-cols-2">
           {dictionary.audiences.items.map((item) => (
-            <li key={item} className="card p-4">{item}</li>
+            <li key={item} className="card p-6">{item}</li>
           ))}
         </ul>
       </section>
 
       <section>
-        <div className="mb-5 flex items-center justify-between gap-4">
-          <h2 className="text-2xl font-semibold">{dictionary.servicesSection.title}</h2>
+        <div className="mb-6 flex items-center justify-between gap-4">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicesSection.title}</h2>
           <Link href={withLang(lang, '/services')} className="font-medium text-cyan-300 hover:text-cyan-200">
             {dictionary.servicesSection.cta}
           </Link>
@@ -49,19 +49,19 @@ export default function HomePage({ params }: { params: { lang: string } }) {
       <Calculator labels={dictionary.calculator} />
 
       <section>
-        <h2 className="text-2xl font-semibold">{dictionary.whyUs.title}</h2>
-        <ul className="mt-4 grid gap-3 md:grid-cols-2">
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.whyUs.title}</h2>
+        <ul className="mt-6 grid gap-4 md:grid-cols-2">
           {dictionary.whyUs.points.map((point) => (
-            <li key={point} className="card p-4">{point}</li>
+            <li key={point} className="card p-6">{point}</li>
           ))}
         </ul>
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold">{dictionary.stack.title}</h2>
-        <div className="mt-4 flex flex-wrap gap-3">
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.stack.title}</h2>
+        <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
           {dictionary.stack.items.map((item) => (
-            <span key={item} className="card rounded-full px-4 py-2 text-slate-200">{item}</span>
+            <span key={item} className="logo-item card flex items-center justify-center px-4 py-4 text-center font-medium text-slate-300">{item}</span>
           ))}
         </div>
       </section>
@@ -70,9 +70,9 @@ export default function HomePage({ params }: { params: { lang: string } }) {
       <FAQ title={dictionary.faq.title} items={dictionary.faq.items} />
 
       <section>
-        <h2 className="text-2xl font-semibold">{dictionary.contact.title}</h2>
-        <p className="mt-2 text-slate-300">{dictionary.contact.subtitle}</p>
-        <div className="mt-4">
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.contact.title}</h2>
+        <p className="mt-3 text-slate-300">{dictionary.contact.subtitle}</p>
+        <div className="mt-6">
           <ContactForm labels={dictionary.contact} />
         </div>
       </section>
