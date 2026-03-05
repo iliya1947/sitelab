@@ -2,18 +2,17 @@
 
 import ServiceCard from '@/components/ServiceCard';
 import { useTranslations } from '@/hooks/useTranslations';
-import { Lang, getDictionary } from '@/lib/i18n';
+import { Locale } from '@/src/i18n';
 import { withLang } from '@/lib/routes';
 
 type ServicesOverviewProps = {
-  lang: Lang;
+  lang: Locale;
   compact?: boolean;
 };
 
 export default function ServicesOverview({ lang, compact = false }: ServicesOverviewProps) {
-  const dictionary = getDictionary(lang);
-  const services = compact ? dictionary.services.slice(0, 3) : dictionary.services;
   const t = useTranslations();
+  const services = compact ? t.services.items.slice(0, 3) : t.services.items;
 
   return (
     <section className="section-glow">

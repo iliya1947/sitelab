@@ -5,24 +5,24 @@ import Hero from '@/components/Hero';
 import ProcessSteps from '@/components/ProcessSteps';
 import Reveal from '@/components/Reveal';
 import ServicesOverview from '@/components/ServicesOverview';
-import { Lang, getDictionary, isLang } from '@/lib/i18n';
 import { withLang } from '@/lib/routes';
 import { buildMetadata } from '@/lib/seo';
+import { getDictionary, isLocale, Locale } from '@/src/i18n';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: { lang: string } }) {
-  if (!isLang(params.lang)) return {};
-  const lang = params.lang as Lang;
-  const dictionary = getDictionary(lang);
+  if (!isLocale(params.lang)) return {};
+  const lang = params.lang as Locale;
+  const dictionary = await getDictionary(lang);
 
-  return buildMetadata({ lang, title: `${dictionary.siteName} | ${dictionary.hero.title}`, description: dictionary.hero.subtitle, path: '' });
+  return buildMetadata({ lang, title: `${dictionary.siteName} | ${dictionary.hero.title1} ${dictionary.hero.title2}`, description: dictionary.hero.subtitle, path: '' });
 }
 
-export default function HomePage({ params }: { params: { lang: string } }) {
-  if (!isLang(params.lang)) notFound();
-  const lang = params.lang as Lang;
-  const dictionary = getDictionary(lang);
+export default async function HomePage({ params }: { params: { lang: string } }) {
+  if (!isLocale(params.lang)) notFound();
+  const lang = params.lang as Locale;
+  const dictionary = await getDictionary(lang);
 
   return (
     <>
@@ -51,7 +51,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
         <ServicesOverview lang={lang} compact />
       </section>
 
-      <Calculator labels={dictionary.calculator} />
+      <Calculator />
 
       <section>
         <Reveal>
@@ -79,8 +79,8 @@ export default function HomePage({ params }: { params: { lang: string } }) {
         </div>
       </section>
 
-      <ProcessSteps title={dictionary.processSection.title} steps={dictionary.processSection.steps} />
-      <FAQ title={dictionary.faq.title} items={dictionary.faq.items} />
+      <ProcessSteps />
+      <FAQ />
 
       <section>
         <Reveal>
@@ -88,7 +88,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
           <p className="mt-3 text-slate-300">{dictionary.contact.subtitle}</p>
         </Reveal>
         <div className="mt-6">
-          <ContactForm labels={dictionary.contact} />
+          <ContactForm />
         </div>
       </section>
     </>

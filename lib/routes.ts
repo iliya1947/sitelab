@@ -1,3 +1,3 @@
-import { Lang } from '@/lib/i18n';
+import { Locale } from '@/src/i18n';
 
-export const withLang = (lang: Lang, path = '') => `/${lang}${path}`;
+export const withLang = (lang: Locale, path = '') => `/${lang}${path}`;
