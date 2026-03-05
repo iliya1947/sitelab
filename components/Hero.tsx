@@ -4,6 +4,7 @@ import CodeRainBackground from '@/components/CodeRainBackground';
 import { Lang } from '@/lib/i18n';
 import { withLang } from '@/lib/routes';
 import Link from 'next/link';
+import { CSSProperties, MouseEvent } from 'react';
 
 type HeroProps = {
   lang: Lang;
@@ -31,15 +32,31 @@ const floatingCards = [
 ];
 
 export default function Hero({ lang }: HeroProps) {
+  const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
+    const target = event.currentTarget;
+    const bounds = target.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+
+    target.style.setProperty('--cursor-x', `${x}%`);
+    target.style.setProperty('--cursor-y', `${y}%`);
+  };
+
   return (
-    <section className="section-glow relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#05070f] px-6 py-24 text-center text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-12">
+    <section
+      onMouseMove={handleMouseMove}
+      className="hero-premium section-glow relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#05070f] px-6 py-24 text-center text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-12"
+      style={{ '--cursor-x': '50%', '--cursor-y': '50%' } as CSSProperties}
+    >
       <div className="absolute inset-0 -z-20 bg-[#05070f]" />
-      <div className="absolute inset-0 -z-10 hidden md:block">
+      <div className="hero-gradient-glow absolute inset-0 -z-10" />
+      <div className="hero-code-layer absolute inset-0 -z-10 hidden md:block">
         <CodeRainBackground />
       </div>
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(10,10,15,0.35)_0%,rgba(10,10,15,0.76)_50%,rgba(8,8,14,0.96)_100%)] backdrop-blur-[2px]" />
+      <div className="hero-cursor-light absolute inset-0 -z-10" />
 
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-4xl motion-reveal is-visible">
         <h1 className="text-5xl font-extrabold leading-[1.08] tracking-[-0.02em] md:text-6xl lg:text-7xl md:leading-[1.06]">
           <span className="block">Build <span className="bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent">Faster.</span></span>
           <span className="block">Launch <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">Smarter.</span></span>
@@ -59,7 +76,7 @@ export default function Hero({ lang }: HeroProps) {
           </Link>
           <Link
             href={withLang(lang, '/services')}
-            className="rounded-full border border-white/25 bg-white/5 px-7 py-3 font-semibold text-white transition duration-300 hover:border-cyan-300/60 hover:shadow-[0_0_24px_rgba(56,189,248,0.35)]"
+            className="btn-interactive rounded-full border border-white/25 bg-white/5 px-7 py-3 font-semibold text-white transition duration-300 hover:border-cyan-300/60 hover:shadow-[0_0_24px_rgba(56,189,248,0.35)]"
           >
             Explore Services
           </Link>
@@ -69,7 +86,7 @@ export default function Hero({ lang }: HeroProps) {
       {floatingCards.map((card, index) => (
         <div
           key={card.title}
-          className={`absolute hidden w-56 rounded-2xl border border-cyan-200/20 bg-white/10 p-4 text-start shadow-[0_0_30px_rgba(56,189,248,0.15)] backdrop-blur-xl lg:block ${card.className}`}
+          className={`hero-float-card absolute hidden w-56 rounded-2xl border border-cyan-200/20 bg-white/10 p-4 text-start shadow-[0_0_30px_rgba(56,189,248,0.15)] backdrop-blur-xl lg:block ${card.className}`}
           style={{ animation: `floatY ${7 + index}s ease-in-out ${index * 0.3}s infinite` }}
         >
           <p className="text-xs uppercase tracking-[0.15em] text-cyan-100/80">{card.title}</p>
