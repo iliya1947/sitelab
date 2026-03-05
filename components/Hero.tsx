@@ -1,6 +1,6 @@
 'use client';
 
-import CodeRainBackground from '@/components/CodeRainBackground';
+import NeuralNetworkBackground from '@/components/NeuralNetworkBackground';
 import { Lang } from '@/lib/i18n';
 import { withLang } from '@/lib/routes';
 import Link from 'next/link';
@@ -37,21 +37,25 @@ export default function Hero({ lang }: HeroProps) {
     const bounds = target.getBoundingClientRect();
     const x = ((event.clientX - bounds.left) / bounds.width) * 100;
     const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+    const tiltX = ((y - 50) / 50) * -1;
+    const tiltY = (x - 50) / 50;
 
     target.style.setProperty('--cursor-x', `${x}%`);
     target.style.setProperty('--cursor-y', `${y}%`);
+    target.style.setProperty('--tilt-x', tiltX.toFixed(3));
+    target.style.setProperty('--tilt-y', tiltY.toFixed(3));
   };
 
   return (
     <section
       onMouseMove={handleMouseMove}
       className="hero-premium section-glow relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#05070f] px-6 py-24 text-center text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-12"
-      style={{ '--cursor-x': '50%', '--cursor-y': '50%' } as CSSProperties}
+      style={{ '--cursor-x': '50%', '--cursor-y': '50%', '--tilt-x': '0', '--tilt-y': '0' } as CSSProperties}
     >
       <div className="absolute inset-0 -z-20 bg-[#05070f]" />
       <div className="hero-gradient-glow absolute inset-0 -z-10" />
-      <div className="hero-code-layer absolute inset-0 -z-10 hidden md:block">
-        <CodeRainBackground />
+      <div className="hero-network-layer absolute inset-0 -z-10 hidden md:block">
+        <NeuralNetworkBackground />
       </div>
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(10,10,15,0.35)_0%,rgba(10,10,15,0.76)_50%,rgba(8,8,14,0.96)_100%)] backdrop-blur-[2px]" />
       <div className="hero-cursor-light absolute inset-0 -z-10" />
