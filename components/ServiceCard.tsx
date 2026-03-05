@@ -6,10 +6,11 @@ type ServiceCardProps = {
   title: string;
   description: string;
   href: string;
+  learnMoreLabel: string;
   index?: number;
 };
 
-export default function ServiceCard({ icon, title, description, href, index = 0 }: ServiceCardProps) {
+export default function ServiceCard({ icon, title, description, href, learnMoreLabel, index = 0 }: ServiceCardProps) {
   return (
     <Reveal delayMs={index * 80}>
       <article className="group card p-8 shadow-card">
@@ -19,7 +20,7 @@ export default function ServiceCard({ icon, title, description, href, index = 0 
         <h3 className="mt-5 text-xl font-semibold tracking-tight">{title}</h3>
         <p className="mt-3 text-slate-300">{description}</p>
         <Link href={href} className="mt-6 inline-flex items-center gap-2 font-medium text-cyan-300 transition hover:text-cyan-200">
-          Learn more <span className="transition group-hover:translate-x-1">→</span>
+          {learnMoreLabel} <span className="transition group-hover:translate-x-1">→</span>
         </Link>
       </article>
     </Reveal>

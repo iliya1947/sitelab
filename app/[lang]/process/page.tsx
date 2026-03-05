@@ -16,5 +16,5 @@ export default function ProcessPage({ params }: { params: { lang: string } }) {
   const lang = params.lang as Lang;
   const dictionary = getDictionary(lang);
 
-  return <ProcessSteps title={dictionary.processSection.title} steps={dictionary.processSection.steps} />;
+  return <ProcessSteps title={dictionary.processSection.title} stepLabel={dictionary.processSection.stepLabel} steps={dictionary.processSection.steps} />;
 }

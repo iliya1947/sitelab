@@ -79,7 +79,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
         </div>
       </section>
 
-      <ProcessSteps title={dictionary.processSection.title} steps={dictionary.processSection.steps} />
+      <ProcessSteps title={dictionary.processSection.title} stepLabel={dictionary.processSection.stepLabel} steps={dictionary.processSection.steps} />
       <FAQ title={dictionary.faq.title} items={dictionary.faq.items} />
 
       <section>

@@ -1,6 +1,6 @@
 import Reveal from '@/components/Reveal';
 
-export default function ProcessSteps({ title, steps }: { title: string; steps: string[] }) {
+export default function ProcessSteps({ title, steps, stepLabel }: { title: string; steps: string[]; stepLabel: string }) {
   return (
     <section>
       <Reveal>
@@ -11,7 +11,7 @@ export default function ProcessSteps({ title, steps }: { title: string; steps: s
           <li key={step}>
             <Reveal delayMs={index * 80}>
               <div className="card p-6 shadow-card">
-                <p className="text-sm uppercase tracking-[0.14em] text-cyan-300">Step {index + 1}</p>
+                <p className="text-sm uppercase tracking-[0.14em] text-cyan-300">{stepLabel} {index + 1}</p>
                 <p className="mt-3 font-semibold text-slate-100">{step}</p>
               </div>
             </Reveal>

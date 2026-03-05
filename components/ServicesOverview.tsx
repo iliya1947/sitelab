@@ -22,6 +22,7 @@ export default function ServicesOverview({ lang, compact = false }: ServicesOver
             description={service.shortDescription}
             href={withLang(lang, `/services/${service.slug}`)}
             index={index}
+            learnMoreLabel={dictionary.servicesSection.learnMore}
           />
         ))}
       </div>
