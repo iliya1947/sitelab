@@ -1,6 +1,6 @@
 'use client';
 
-import NeuralNetworkBackground from '@/components/NeuralNetworkBackground';
+import CodeRainBackground from '@/components/CodeRainBackground';
 import { Lang } from '@/lib/i18n';
 import { withLang } from '@/lib/routes';
 import Link from 'next/link';
@@ -55,7 +55,7 @@ export default function Hero({ lang }: HeroProps) {
       <div className="absolute inset-0 -z-20 bg-[#05070f]" />
       <div className="hero-gradient-glow absolute inset-0 -z-10" />
       <div className="hero-network-layer absolute inset-0 -z-10 hidden md:block">
-        <NeuralNetworkBackground />
+        <CodeRainBackground />
       </div>
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(10,10,15,0.35)_0%,rgba(10,10,15,0.76)_50%,rgba(8,8,14,0.96)_100%)] backdrop-blur-[2px]" />
       <div className="hero-cursor-light absolute inset-0 -z-10" />
