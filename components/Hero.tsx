@@ -32,21 +32,21 @@ const floatingCards = [
 
 export default function Hero({ lang }: HeroProps) {
   return (
-    <section className="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#05070f] px-6 py-24 text-center text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-12">
+    <section className="section-glow relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#05070f] px-6 py-24 text-center text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-12">
       <div className="absolute inset-0 -z-20 bg-[#05070f]" />
       <div className="absolute inset-0 -z-10 hidden md:block">
         <CodeRainBackground />
       </div>
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(10,10,15,0.35)_0%,rgba(10,10,15,0.76)_50%,rgba(8,8,14,0.96)_100%)] backdrop-blur-[2px]" />
 
-      <div className="mx-auto max-w-3xl">
-        <h1 className="text-4xl font-black leading-tight tracking-tight md:text-7xl md:leading-[1.05]">
+      <div className="mx-auto max-w-4xl">
+        <h1 className="text-5xl font-extrabold leading-[1.08] tracking-[-0.02em] md:text-6xl lg:text-7xl md:leading-[1.06]">
           <span className="block">Build <span className="bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent">Faster.</span></span>
           <span className="block">Launch <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">Smarter.</span></span>
           <span className="block">Dominate <span className="bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">Online.</span></span>
         </h1>
 
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-200 md:text-xl">
+        <p className="mx-auto mt-8 max-w-2xl text-base tracking-wide text-slate-200 md:text-lg">
           AI-accelerated premium web development for businesses that move fast.
         </p>
 

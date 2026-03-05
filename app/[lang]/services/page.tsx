@@ -18,8 +18,8 @@ export default function ServicesPage({ params }: { params: { lang: string } }) {
 
   return (
     <section>
-      <h1 className="text-3xl font-bold">{dictionary.nav.services}</h1>
-      <p className="mt-2 text-slate-300">{dictionary.servicesSection.title}</p>
+      <h1 className="text-4xl font-bold tracking-tight md:text-5xl">{dictionary.nav.services}</h1>
+      <p className="mt-3 text-slate-300">{dictionary.servicesSection.title}</p>
       <div className="mt-8">
         <ServicesOverview lang={lang} />
       </div>

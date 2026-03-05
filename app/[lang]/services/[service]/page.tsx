@@ -28,34 +28,34 @@ export default function ServicePage({ params }: { params: { lang: string; servic
 
   return (
     <article className="space-y-8">
-      <header className="card p-8 text-white">
-        <h1 className="text-3xl font-bold">{service.title}</h1>
+      <header className="section-glow card p-8 text-white">
+        <h1 className="text-4xl font-bold tracking-tight md:text-5xl">{service.title}</h1>
         <p className="mt-3 text-blue-100">{service.offer}</p>
       </header>
 
       <section>
-        <h2 className="text-2xl font-semibold">{dictionary.servicePage.audienceTitle}</h2>
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.audienceTitle}</h2>
         <ul className="mt-3 list-disc space-y-1 ps-6">
           {service.audience.map((item) => <li key={item}>{item}</li>)}
         </ul>
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold">{dictionary.servicePage.includesTitle}</h2>
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.includesTitle}</h2>
         <ul className="mt-3 list-disc space-y-1 ps-6">
           {service.includes.map((item) => <li key={item}>{item}</li>)}
         </ul>
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold">{dictionary.servicePage.technologiesTitle}</h2>
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.technologiesTitle}</h2>
         <div className="mt-3 flex flex-wrap gap-2">
           {service.technologies.map((item) => <span className="card rounded-full px-3 py-1" key={item}>{item}</span>)}
         </div>
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold">{dictionary.servicePage.demoTitle}</h2>
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.demoTitle}</h2>
         {/* Replace this placeholder with real screenshots or live embeds */}
         <div className="card mt-3 border-dashed p-8 text-slate-300">
           Demo block placeholder for {service.title} interface.
@@ -63,7 +63,7 @@ export default function ServicePage({ params }: { params: { lang: string; servic
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold">{dictionary.servicePage.stepsTitle}</h2>
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.stepsTitle}</h2>
         <ol className="mt-3 grid gap-3 md:grid-cols-2">
           {service.steps.map((step, i) => (
             <li key={step} className="card p-4">{i + 1}. {step}</li>

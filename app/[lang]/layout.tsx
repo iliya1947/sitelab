@@ -22,16 +22,16 @@ export default function LangLayout({ children, params }: { children: React.React
     <AccessibilityProvider>
       <HtmlLanguageSync lang={lang} />
       <div dir={lang === 'he' ? 'rtl' : 'ltr'} className="min-h-screen bg-[#05070f] text-slate-100">
-        <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+        <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4">
-            <Link href={withLang(lang)} className="text-xl font-bold text-cyan-100">
+            <Link href={withLang(lang)} className="text-xl font-bold tracking-tight text-cyan-100">
               {dictionary.siteName}
             </Link>
-            <nav aria-label="Main navigation" className="flex items-center gap-4 text-sm font-medium text-slate-200">
-              <Link href={withLang(lang)}>{dictionary.nav.home}</Link>
-              <Link href={withLang(lang, '/services')}>{dictionary.nav.services}</Link>
-              <Link href={withLang(lang, '/process')}>{dictionary.nav.process}</Link>
-              <Link href={withLang(lang, '/contact')}>{dictionary.nav.contact}</Link>
+            <nav aria-label="Main navigation" className="flex items-center gap-4 text-sm font-medium tracking-wide text-slate-200">
+              <Link href={withLang(lang)} className="transition hover:text-cyan-200">{dictionary.nav.home}</Link>
+              <Link href={withLang(lang, '/services')} className="transition hover:text-cyan-200">{dictionary.nav.services}</Link>
+              <Link href={withLang(lang, '/process')} className="transition hover:text-cyan-200">{dictionary.nav.process}</Link>
+              <Link href={withLang(lang, '/contact')} className="transition hover:text-cyan-200">{dictionary.nav.contact}</Link>
             </nav>
             <div className="flex gap-2 text-sm">
               {languages.map((locale) => (
@@ -43,7 +43,7 @@ export default function LangLayout({ children, params }: { children: React.React
           </div>
         </header>
 
-        <main id="main-content" className="mx-auto max-w-6xl space-y-16 px-4 py-8">
+        <main id="main-content" className="mx-auto max-w-6xl space-y-6 px-4 py-8 md:py-12">
           {children}
         </main>
 
