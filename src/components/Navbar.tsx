@@ -22,8 +22,8 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   const pathname = usePathname();
   const router = useRouter();
 
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   // Scroll & resize listener
@@ -48,6 +48,12 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (!(isMobileViewport || isScrolled)) {
+      setIsMobileMenuOpen(false);
+    }
+  }, [isMobileViewport, isScrolled]);
+
   // Close menu on Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -57,10 +63,8 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
     return () => window.removeEventListener('keydown', handleEscape);
   }, []);
 
-  const isHomePage = useMemo(
-    () => pathname === withLang(lang) || pathname === `${withLang(lang)}/`,
-    [lang, pathname]
-  );
+  const isHomePage = useMemo(() => pathname === withLang(lang) || pathname === `${withLang(lang)}/`, [lang, pathname]);
+  const isCompact = isMobileViewport || isScrolled;
 
   const navLinks = useMemo(
     () => [
@@ -79,9 +83,11 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
 
   const handleLocaleSwitch = useCallback(
     (nextLocale: Locale) => {
-      const basePath = pathname.replace(/^\/(en|ru|he)/, `/${nextLocale}`);
+      const basePath = pathname.replace(/^\/(en|ru|he)(?=\/|$)/, `/${nextLocale}`);
       const hash = window.location.hash;
-      router.push(`${basePath}${hash}`);
+      const nextPath = `${basePath}${hash}`;
+
+      router.push(nextPath);
       setIsMobileMenuOpen(false);
     },
     [pathname, router]
@@ -90,18 +96,15 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   const showCompact = isMobileViewport || isScrolled;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      {/* Background blur layer */}
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
       <div
         aria-hidden="true"
-        className={`absolute inset-0 transition-all duration-300 ${
-          showCompact ? 'bg-black/60 backdrop-blur-md border-b border-white/10' : 'bg-transparent'
+        className={`pointer-events-none absolute inset-0 transition-all duration-300 ${
+          isScrolled ? 'border-b border-white/10 bg-black/60 backdrop-blur-md' : 'bg-transparent'
         }`}
       />
 
-      {/* Content layer */}
-      <div className="relative mx-auto max-w-7xl flex items-center justify-between h-20 px-6">
-        {/* Logo */}
+      <div className="relative mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-6">
         <Link
           href={withLang(lang)}
           className="text-xl font-bold tracking-tight text-cyan-100 transition hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
@@ -110,55 +113,54 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
           {dictionary.siteName}
         </Link>
 
-        {/* Desktop nav */}
-        {!showCompact && !isMobileViewport && (
-          <nav aria-label="Main navigation" className="hidden md:flex items-center gap-7 text-sm font-medium tracking-wide text-slate-200">
-            {navLinks.map((link) => (
-              <Link
-                key={link.key}
-                href={getSectionHref(link.key)}
-                className="transition hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        )}
-
-        {/* Desktop locale switcher */}
-        {!showCompact && !isMobileViewport && (
-          <div className="hidden md:flex items-center gap-2">
-            {Object.entries(localeLabels).map(([locale, label]) => {
-              const typedLocale = locale as Locale;
-              const isActive = typedLocale === lang;
-              return (
-                <button
-                  key={locale}
-                  type="button"
-                  onClick={() => handleLocaleSwitch(typedLocale)}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 ${
-                    isActive
-                      ? 'border-cyan-300/70 bg-cyan-300/20 text-cyan-100'
-                      : 'border-white/20 bg-white/5 text-slate-200 hover:border-cyan-300/40 hover:text-cyan-100'
-                  }`}
-                  aria-label={`Switch language to ${label}`}
+        {!isCompact ? (
+          <>
+            <nav aria-label="Main navigation" className="hidden items-center gap-7 text-sm font-medium tracking-wide text-slate-200 md:flex">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.key}
+                  href={getSectionHref(link.key)}
+                  className="transition hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
                 >
-                  {typedLocale}
-                </button>
-              );
-            })}
-          </div>
-        )}
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
 
-        {/* Hamburger button */}
-        {showCompact && (
+            <div className="hidden items-center gap-2 md:flex">
+              {Object.entries(localeLabels).map(([locale, label]) => {
+                const typedLocale = locale as Locale;
+                const isActive = typedLocale === lang;
+
+                return (
+                  <button
+                    key={locale}
+                    type="button"
+                    onClick={() => handleLocaleSwitch(typedLocale)}
+                    className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 ${
+                      isActive
+                        ? 'border-cyan-300/70 bg-cyan-300/20 text-cyan-100'
+                        : 'border-white/20 bg-white/5 text-slate-200 hover:border-cyan-300/40 hover:text-cyan-100'
+                    }`}
+                    aria-label={`Switch language to ${label}`}
+                  >
+                    {typedLocale}
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        ) : null}
+
+        {isCompact ? (
           <button
             type="button"
             aria-label="Toggle navigation menu"
             aria-expanded={isMobileMenuOpen}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-            className="rounded-xl border border-white/20 bg-white/10 p-2.5 text-slate-100 transition hover:border-cyan-300/50 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 md:hidden"
+            className="rounded-xl border border-white/20 bg-white/10 p-2.5 text-slate-100 transition hover:border-cyan-300/50 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
           >
+            <span className="sr-only">Open navigation menu</span>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               {isMobileMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -170,26 +172,26 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
         )}
       </div>
 
-      {/* Mobile menu panel */}
-      {showCompact && (
+      <div className="pointer-events-none relative mx-auto w-full max-w-7xl px-6">
         <div
           id="navbar-menu-panel"
-          className={`absolute left-1/2 w-[min(92vw,460px)] -translate-x-1/2 mt-2 rounded-2xl border border-white/10 bg-black/80 p-6 shadow-xl backdrop-blur-lg transition-all duration-200 ${
-            isMobileMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-2 opacity-0 invisible'
+          className={`pointer-events-auto absolute left-1/2 top-2 w-[min(92vw,460px)] -translate-x-1/2 transform rounded-2xl border border-white/10 bg-black/80 p-6 shadow-xl backdrop-blur-lg transition-all duration-200 ${
+            isMobileMenuOpen && isCompact ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0 invisible'
           }`}
         >
-          <nav aria-label="Mobile navigation" className="space-y-3">
+          <nav aria-label="Compact navigation" className="space-y-1">
             {navLinks.map((link) => (
               <Link
-                key={link.key}
+                key={`mobile-${link.key}`}
                 href={getSectionHref(link.key)}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
                 className="block rounded-lg px-3 py-2 text-start text-sm font-medium text-slate-100 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
+
           <div className="mt-4 flex flex-wrap gap-2 border-t border-white/10 pt-4">
             {Object.entries(localeLabels).map(([locale, label]) => {
               const typedLocale = locale as Locale;
@@ -212,7 +214,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
             })}
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }
