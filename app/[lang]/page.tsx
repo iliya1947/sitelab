@@ -41,7 +41,7 @@ export default async function HomePage({ params }: { params: { lang: string } })
         </ul>
       </section>
 
-      <section>
+      <section id="services">
         <Reveal className="mb-6 flex items-center justify-between gap-4">
           <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicesSection.title}</h2>
           <Link href={withLang(lang, '/services')} className="font-medium text-cyan-300 hover:text-cyan-200">
@@ -82,7 +82,7 @@ export default async function HomePage({ params }: { params: { lang: string } })
       <ProcessSteps />
       <FAQ />
 
-      <section>
+      <section id="contact">
         <Reveal>
           <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.contact.title}</h2>
           <p className="mt-3 text-slate-300">{dictionary.contact.subtitle}</p>
