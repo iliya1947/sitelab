@@ -1,33 +1,45 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
-type Layer = 'layer1' | 'layer2' | 'layer3';
-
-type CodeColumn = {
+type Drop = {
   x: number;
   y: number;
   speed: number;
-  drift: number;
   opacity: number;
   fontSize: number;
+  drift: number;
   blur: number;
-  glow: number;
   color: string;
-  layer: Layer;
+  text: string;
 };
 
-const letters = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const codeLines = [
+  'const app = await createAppRouter();',
+  'export default function Page(){ return <Hero /> }',
+  'type Locale = "en" | "ru" | "he";',
+  'const [open, setOpen] = useState(false);',
+  'requestAnimationFrame(renderFrame);',
+  'useEffect(() => cleanup, []);',
+  'import Link from "next/link";',
+  'className="backdrop-blur-xl"'
+];
 
-const layers: Record<Layer, Partial<CodeColumn>> = {
-  layer1: { speed: 1.0, drift: 0.3, opacity: 0.3, fontSize: 16, blur: 0, glow: 1, color: '#0f0' },
-  layer2: { speed: 1.5, drift: 0.6, opacity: 0.5, fontSize: 20, blur: 0.5, glow: 1.5, color: '#0f0' },
-  layer3: { speed: 2.0, drift: 1.0, opacity: 0.8, fontSize: 24, blur: 1, glow: 2, color: '#0f0' },
-};
+const palette = ['#7dd3fc', '#60a5fa', '#a78bfa'];
+
+function randomFrom<T>(items: T[]) {
+  return items[Math.floor(Math.random() * items.length)];
+}
 
 export default function CodeRainBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const columnsRef = useRef<CodeColumn[]>([]);
+  const dropsRef = useRef<Drop[]>([]);
+  const rafRef = useRef<number>();
+
+  const prefersReducedMotion = useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -36,81 +48,68 @@ export default function CodeRainBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
+    const setup = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const mobile = window.innerWidth < 768;
+      const count = prefersReducedMotion ? 20 : mobile ? 28 : 46;
 
-      // Инициализация колонок
-      const columnCount = Math.floor(canvas.width / 20);
-      columnsRef.current = Array.from({ length: columnCount }, (_, i) => {
-        const layer: Layer = i % 3 === 0 ? 'layer1' : i % 3 === 1 ? 'layer2' : 'layer3';
-        const base = layers[layer];
-        return {
-          x: i * 20,
-          y: Math.random() * canvas.height,
-          speed: (base.speed || 1) + Math.random(),
-          drift: (base.drift || 0.3) * (Math.random() > 0.5 ? 1 : -1),
-          opacity: base.opacity || 0.5,
-          fontSize: base.fontSize || 18,
-          blur: base.blur || 0,
-          glow: base.glow || 1,
-          color: base.color || '#0f0',
-          layer,
-        };
-      });
+      dropsRef.current = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        speed: prefersReducedMotion ? 0.18 : 0.45 + Math.random() * 1.2,
+        opacity: 0.18 + Math.random() * 0.5,
+        fontSize: 12 + Math.random() * 10,
+        drift: -0.3 + Math.random() * 0.6,
+        blur: Math.random() * 4,
+        color: randomFrom(palette),
+        text: randomFrom(codeLines)
+      }));
     };
 
-    resize();
-    window.addEventListener('resize', resize);
+    const render = () => {
+      const { width, height } = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, width, height);
 
-    const draw = () => {
-      if (!ctx) return;
+      ctx.fillStyle = 'rgba(2,6,23,0.2)';
+      ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = 'rgba(0,0,0,0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      for (const drop of dropsRef.current) {
+        ctx.font = `${drop.fontSize}px ui-monospace, SFMono-Regular, Menlo, monospace`;
+        ctx.fillStyle = drop.color;
+        ctx.globalAlpha = drop.opacity;
+        ctx.filter = `blur(${drop.blur}px)`;
+        ctx.fillText(drop.text, drop.x, drop.y);
 
-      ctx.textBaseline = 'top';
-      columnsRef.current.forEach((col) => {
-        ctx.font = `${col.fontSize}px monospace`;
-        ctx.fillStyle = col.color;
-        ctx.shadowColor = col.color;
-        ctx.shadowBlur = col.glow;
-        ctx.globalAlpha = col.opacity;
+        drop.y += drop.speed;
+        drop.x += drop.drift;
 
-        const char = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(char, col.x + col.drift, col.y);
+        if (drop.y > height + 50) {
+          drop.y = -30;
+          drop.x = Math.random() * width;
+          drop.text = randomFrom(codeLines);
+        }
+      }
 
-        col.y += col.speed;
-        col.drift += Math.sin(col.y / 20) * 0.5;
-
-        if (col.y > canvas.height) col.y = -col.fontSize * 2;
-      });
-
-      animationFrameId = requestAnimationFrame(draw);
+      ctx.globalAlpha = 1;
+      ctx.filter = 'none';
+      rafRef.current = requestAnimationFrame(render);
     };
 
-    draw();
+    setup();
+    render();
+    window.addEventListener('resize', setup);
 
     return () => {
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', setup);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: -1,
-        background: '#000',
-      }}
-    />
-  );
+  return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />;
 }

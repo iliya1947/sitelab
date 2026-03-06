@@ -28,19 +28,6 @@ export default async function HomePage({ params }: { params: { lang: string } })
     <>
       <Hero lang={lang} />
 
-      <section>
-        <Reveal>
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.audiences.title}</h2>
-        </Reveal>
-        <ul className="mt-6 grid gap-4 md:grid-cols-2">
-          {dictionary.audiences.items.map((item, index) => (
-            <Reveal key={item} delayMs={index * 70}>
-              <li className="card p-6">{item}</li>
-            </Reveal>
-          ))}
-        </ul>
-      </section>
-
       <section id="services">
         <Reveal className="mb-6 flex items-center justify-between gap-4">
           <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicesSection.title}</h2>
@@ -52,44 +39,19 @@ export default async function HomePage({ params }: { params: { lang: string } })
       </section>
 
       <Calculator />
-
-      <section>
-        <Reveal>
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.whyUs.title}</h2>
-        </Reveal>
-        <ul className="mt-6 grid gap-4 md:grid-cols-2">
-          {dictionary.whyUs.points.map((point, index) => (
-            <Reveal key={point} delayMs={index * 70}>
-              <li className="card p-6">{point}</li>
-            </Reveal>
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <Reveal>
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.stack.title}</h2>
-        </Reveal>
-        <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {dictionary.stack.items.map((item, index) => (
-            <Reveal key={item} delayMs={index * 60}>
-              <span className="logo-item card flex items-center justify-center px-4 py-4 text-center font-medium text-slate-300">{item}</span>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
       <ProcessSteps />
-      <FAQ />
 
-      <section id="contact">
-        <Reveal>
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.contact.title}</h2>
-          <p className="mt-3 text-slate-300">{dictionary.contact.subtitle}</p>
-        </Reveal>
-        <div className="mt-6">
-          <ContactForm />
+      <section id="contact" className="grid gap-8 lg:grid-cols-2 lg:items-start">
+        <div>
+          <Reveal>
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.contact.title}</h2>
+            <p className="mt-3 text-slate-300">{dictionary.contact.subtitle}</p>
+          </Reveal>
+          <div className="mt-6">
+            <ContactForm />
+          </div>
         </div>
+        <FAQ />
       </section>
     </>
   );
