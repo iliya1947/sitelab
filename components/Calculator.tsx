@@ -30,7 +30,7 @@ export default function Calculator() {
   }, [siteType, pages, multilingual, store, seo, urgent]);
 
   return (
-    <section className="section-glow card rounded-3xl p-8 shadow-card transition hover:border-blue-400/60 hover:shadow-[0_0_36px_rgba(59,130,246,0.28)]">
+    <section id="calculator" className="section-glow card rounded-3xl p-8 shadow-card transition hover:border-blue-400/60 hover:shadow-[0_0_36px_rgba(59,130,246,0.28)]">
       <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t.calculator.title}</h2>
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <label className="flex flex-col gap-2">

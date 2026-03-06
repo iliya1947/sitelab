@@ -7,7 +7,7 @@ export default function ProcessSteps() {
   const t = useTranslations();
 
   return (
-    <section>
+    <section id="process">
       <Reveal>
         <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t.process.title}</h2>
       </Reveal>

@@ -28,6 +28,7 @@ export default function Hero({ lang }: HeroProps) {
 
   return (
     <section
+      id="hero"
       onMouseMove={handleMouseMove}
       className="hero-premium section-glow relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#05070f] px-6 py-16 text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-10 lg:py-20"
       style={{ '--cursor-x': '50%', '--cursor-y': '50%' } as CSSProperties}
