@@ -4,7 +4,7 @@ import { withLang } from '@/lib/routes';
 import type { Dictionary, Locale } from '@/src/i18n/types';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 
 type NavbarProps = {
   lang: Locale;
@@ -26,14 +26,10 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
 
+  // Scroll & resize listener
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
-    };
-
-    const handleResize = () => {
-      setIsMobileViewport(window.innerWidth < 768);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 80);
+    const handleResize = () => setIsMobileViewport(window.innerWidth < 768);
 
     handleScroll();
     handleResize();
@@ -47,6 +43,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
     };
   }, []);
 
+  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
@@ -57,18 +54,13 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
     }
   }, [isMobileViewport, isScrolled]);
 
+  // Close menu on Escape
   useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsMobileMenuOpen(false);
-      }
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
     };
-
     window.addEventListener('keydown', handleEscape);
-
-    return () => {
-      window.removeEventListener('keydown', handleEscape);
-    };
+    return () => window.removeEventListener('keydown', handleEscape);
   }, []);
 
   const isHomePage = useMemo(() => pathname === withLang(lang) || pathname === `${withLang(lang)}/`, [lang, pathname]);
@@ -81,20 +73,13 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
       { key: 'calculator', label: CALCULATOR_LABELS[lang] },
       { key: 'contact', label: dictionary.nav.contact }
     ],
-    [dictionary.nav.contact, dictionary.nav.process, dictionary.nav.services, lang]
+    [dictionary.nav, lang]
   );
 
   const getSectionHref = useCallback(
-    (sectionId: string) => {
-      if (isHomePage) return `#${sectionId}`;
-      return `${withLang(lang)}#${sectionId}`;
-    },
+    (sectionId: string) => (isHomePage ? `#${sectionId}` : `${withLang(lang)}#${sectionId}`),
     [isHomePage, lang]
   );
-
-  const closeMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen(false);
-  }, []);
 
   const handleLocaleSwitch = useCallback(
     (nextLocale: Locale) => {
@@ -107,6 +92,8 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
     },
     [pathname, router]
   );
+
+  const showCompact = isMobileViewport || isScrolled;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
@@ -170,20 +157,19 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
             type="button"
             aria-label="Toggle navigation menu"
             aria-expanded={isMobileMenuOpen}
-            aria-controls="navbar-menu-panel"
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className="rounded-xl border border-white/20 bg-white/10 p-2.5 text-slate-100 transition hover:border-cyan-300/50 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
           >
             <span className="sr-only">Open navigation menu</span>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               ) : (
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
-        ) : null}
+        )}
       </div>
 
       <div className="pointer-events-none relative mx-auto w-full max-w-7xl px-6">
@@ -210,10 +196,9 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
             {Object.entries(localeLabels).map(([locale, label]) => {
               const typedLocale = locale as Locale;
               const isActive = typedLocale === lang;
-
               return (
                 <button
-                  key={`mobile-${locale}`}
+                  key={locale}
                   type="button"
                   onClick={() => handleLocaleSwitch(typedLocale)}
                   className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 ${
