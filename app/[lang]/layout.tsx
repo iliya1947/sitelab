@@ -26,7 +26,7 @@ export default async function LangLayout({ children, params }: { children: React
         <div dir={lang === 'he' ? 'rtl' : 'ltr'} className="min-h-screen bg-[#05070f] text-slate-100">
           <Navbar lang={lang} dictionary={dictionary} localeLabels={localeLabels} />
 
-          <main id="main-content" className="mx-auto max-w-6xl space-y-6 px-4 py-8 md:py-12">
+          <main id="main-content" className="mx-auto max-w-6xl space-y-6 px-4 pt-24 pb-8 md:pt-24 md:pb-12">
             {children}
           </main>
 
