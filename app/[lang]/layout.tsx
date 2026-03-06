@@ -1,3 +1,4 @@
+import '@/styles/globals.css';
 import AccessibilityMenu from '@/components/AccessibilityMenu';
 import { AccessibilityProvider } from '@/components/accessibility/AccessibilityProvider';
 import HtmlLanguageSync from '@/components/accessibility/HtmlLanguageSync';
