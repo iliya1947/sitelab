@@ -1,10 +1,9 @@
-import '@/styles/globals.css';
 import AccessibilityMenu from '@/components/AccessibilityMenu';
 import { AccessibilityProvider } from '@/components/accessibility/AccessibilityProvider';
 import HtmlLanguageSync from '@/components/accessibility/HtmlLanguageSync';
+import Navbar from '@/src/components/Navbar';
 import { DictionaryProvider } from '@/src/i18n/DictionaryProvider';
 import { getDictionary, isLocale, locales, Locale } from '@/src/i18n';
-import Navbar from '@/src/components/Navbar';
 import { notFound } from 'next/navigation';
 
 export function generateStaticParams() {
@@ -27,7 +26,7 @@ export default async function LangLayout({ children, params }: { children: React
         <div dir={lang === 'he' ? 'rtl' : 'ltr'} className="min-h-screen bg-[#05070f] text-slate-100">
           <Navbar lang={lang} dictionary={dictionary} localeLabels={localeLabels} />
 
-          <main id="main-content" className="mx-auto max-w-6xl space-y-6 px-4 pt-24 pb-8 md:pt-24 md:pb-12">
+          <main id="main-content" className="mx-auto max-w-6xl space-y-6 px-4 pb-8 pt-24 md:pb-12 md:pt-24">
             {children}
           </main>
 
