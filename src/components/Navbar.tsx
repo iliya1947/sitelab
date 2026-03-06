@@ -4,7 +4,7 @@ import { withLang } from "@/lib/routes";
 import type { Dictionary, Locale } from "@/src/i18n/types";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 type NavbarProps = {
   lang: Locale;
@@ -21,62 +21,25 @@ const CALCULATOR_LABELS: Record<Locale, string> = {
 export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
-
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  /* ---------------- SCROLL + RESIZE ---------------- */
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 80);
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-
-    handleScroll();
-    handleResize();
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const isCompact = isMobile || isScrolled;
-
-  /* ---------------- NAV LINKS ---------------- */
 
   const navLinks = useMemo(
     () => [
-      { key: "services", label: dictionary.nav.services },
-      { key: "process", label: dictionary.nav.process },
-      { key: "calculator", label: CALCULATOR_LABELS[lang] },
-      { key: "contact", label: dictionary.nav.contact }
+      { key: "home", label: dictionary.nav.home, href: withLang(lang) },
+      { key: "services", label: dictionary.nav.services, href: `${withLang(lang)}#services` },
+      { key: "process", label: dictionary.nav.process, href: `${withLang(lang)}#process` },
+      { key: "calculator", label: CALCULATOR_LABELS[lang], href: `${withLang(lang)}#calculator` },
+      { key: "contact", label: dictionary.nav.contact, href: `${withLang(lang)}#contact` }
     ],
-    [dictionary.nav, lang]
+    [dictionary.nav.contact, dictionary.nav.home, dictionary.nav.process, dictionary.nav.services, lang]
   );
-
-  const isHomePage = useMemo(() => {
-    return pathname === withLang(lang) || pathname === `${withLang(lang)}/`;
-  }, [pathname, lang]);
-
-  const getSectionHref = useCallback(
-    (section: string) => {
-      if (isHomePage) return `#${section}`;
-      return `${withLang(lang)}#${section}`;
-    },
-    [isHomePage, lang]
-  );
-
-  /* ---------------- LANGUAGE SWITCH ---------------- */
 
   const handleLocaleSwitch = useCallback(
     (nextLocale: Locale) => {
-      const hash = window.location.hash;
-
-      const nextPath = pathname.replace(/^\/(en|ru|he)/, `/${nextLocale}`);
+      const hash = typeof window !== "undefined" ? window.location.hash : "";
+      const nextPath = /^\/(en|ru|he)(\/|$)/.test(pathname)
+        ? pathname.replace(/^\/(en|ru|he)(?=\/|$)/, `/${nextLocale}`)
+        : `/${nextLocale}${pathname.startsWith("/") ? pathname : `/${pathname}`}`;
 
       router.push(`${nextPath}${hash}`);
       setMenuOpen(false);
@@ -86,123 +49,81 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
 
   const closeMenu = () => setMenuOpen(false);
 
-  /* ---------------- RENDER ---------------- */
-
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-black/70 backdrop-blur-lg border-b border-white/10 py-3"
-          : "bg-transparent py-6"
-      }`}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-
-        {/* LOGO */}
-
-        <Link
-          href={withLang(lang)}
-          className="text-lg font-semibold text-cyan-100 hover:text-cyan-200"
-        >
+    <header className="fixed top-0 left-0 right-0 z-50 h-20 border-b border-white/10 bg-black/40 backdrop-blur-md">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
+        <Link href={withLang(lang)} className="text-lg font-semibold text-cyan-100 hover:text-cyan-200">
           {dictionary.siteName}
         </Link>
 
-        {/* DESKTOP MENU */}
+        <nav className="hidden items-center gap-8 text-sm text-slate-200 lg:flex">
+          {navLinks.map((link) => (
+            <Link key={link.key} href={link.href} className="transition hover:text-cyan-300">
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
-        {!isCompact && (
-          <>
-            <nav className="hidden md:flex items-center gap-8 text-sm text-slate-200">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.key}
-                  href={getSectionHref(link.key)}
-                  className="hover:text-cyan-300 transition"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+        <div className="hidden gap-2 lg:flex">
+          {Object.entries(localeLabels).map(([locale]) => {
+            const localeCode = locale as Locale;
 
-            <div className="hidden md:flex gap-2">
-              {Object.entries(localeLabels).map(([locale]) => {
-                const l = locale as Locale;
+            return (
+              <button
+                key={locale}
+                onClick={() => handleLocaleSwitch(localeCode)}
+                className={`rounded-full border px-3 py-1 text-xs uppercase ${
+                  localeCode === lang
+                    ? "border-cyan-400 text-cyan-200"
+                    : "border-white/20 text-slate-200 hover:border-cyan-400"
+                }`}
+              >
+                {localeCode}
+              </button>
+            );
+          })}
+        </div>
 
-                return (
-                  <button
-                    key={locale}
-                    onClick={() => handleLocaleSwitch(l)}
-                    className={`px-3 py-1 rounded-full text-xs border ${
-                      l === lang
-                        ? "border-cyan-400 text-cyan-200"
-                        : "border-white/20 text-slate-200 hover:border-cyan-400"
-                    }`}
-                  >
-                    {l}
-                  </button>
-                );
-              })}
-            </div>
-          </>
-        )}
-
-        {/* HAMBURGER */}
-
-        {isCompact && (
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="p-2 rounded-lg border border-white/20 bg-white/5 hover:border-cyan-400"
-            aria-label="Open menu"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              {menuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M3 6h18M3 12h18M3 18h18" />
-              )}
-            </svg>
-          </button>
-        )}
+        <button
+          onClick={() => setMenuOpen((open) => !open)}
+          className="rounded-lg border border-white/20 bg-white/5 p-2 hover:border-cyan-400 lg:hidden"
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
+            {menuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M3 6h18M3 12h18M3 18h18" />}
+          </svg>
+        </button>
       </div>
 
-      {/* DROPDOWN MENU */}
-
-      {menuOpen && isCompact && (
-        <div className="absolute left-1/2 mt-3 w-[92%] max-w-md -translate-x-1/2 rounded-2xl border border-white/10 bg-black/80 backdrop-blur-xl p-6 shadow-xl">
-          <nav className="space-y-3">
+      {menuOpen && (
+        <div className="absolute top-full left-1/2 mt-4 w-64 -translate-x-1/2 rounded-xl border border-white/10 bg-black/80 shadow-2xl backdrop-blur-xl lg:hidden">
+          <div className="space-y-1 p-4">
             {navLinks.map((link) => (
               <Link
                 key={link.key}
-                href={getSectionHref(link.key)}
+                href={link.href}
                 onClick={closeMenu}
-                className="block text-sm text-slate-100 hover:text-cyan-300"
+                className="block rounded-md px-3 py-2 text-center text-sm text-slate-100 transition hover:bg-white/5 hover:text-cyan-300"
               >
                 {link.label}
               </Link>
             ))}
-          </nav>
+          </div>
 
-          <div className="flex gap-2 mt-5 pt-4 border-t border-white/10">
+          <div className="flex justify-center gap-2 border-t border-white/10 p-4">
             {Object.entries(localeLabels).map(([locale]) => {
-              const l = locale as Locale;
+              const localeCode = locale as Locale;
 
               return (
                 <button
                   key={locale}
-                  onClick={() => handleLocaleSwitch(l)}
-                  className={`px-3 py-1 rounded-full text-xs border ${
-                    l === lang
-                      ? "border-cyan-400 text-cyan-200"
-                      : "border-white/20 text-slate-200"
+                  onClick={() => handleLocaleSwitch(localeCode)}
+                  className={`rounded-full border px-3 py-1 text-xs uppercase ${
+                    localeCode === lang ? "border-cyan-400 text-cyan-200" : "border-white/20 text-slate-200"
                   }`}
                 >
-                  {l}
+                  {localeCode}
                 </button>
               );
             })}
