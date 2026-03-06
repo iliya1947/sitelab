@@ -1,10 +1,10 @@
 "use client";
 
-import { withLang } from '@/lib/routes';
-import type { Dictionary, Locale } from '@/src/i18n/types';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { withLang } from "@/lib/routes";
+import type { Dictionary, Locale } from "@/src/i18n/types";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 type NavbarProps = {
   lang: Locale;
@@ -13,208 +13,202 @@ type NavbarProps = {
 };
 
 const CALCULATOR_LABELS: Record<Locale, string> = {
-  en: 'Calculator',
-  ru: 'Калькулятор',
-  he: 'מחשבון'
+  en: "Calculator",
+  ru: "Калькулятор",
+  he: "מחשבון"
 };
 
 export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Scroll & resize listener
+  /* ---------------- SCROLL + RESIZE ---------------- */
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 80);
-    const handleResize = () => setIsMobileViewport(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
 
     handleScroll();
     handleResize();
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+  const isCompact = isMobile || isScrolled;
 
-  useEffect(() => {
-    if (!(isMobileViewport || isScrolled)) {
-      setIsMobileMenuOpen(false);
-    }
-  }, [isMobileViewport, isScrolled]);
-
-  // Close menu on Escape
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsMobileMenuOpen(false);
-    };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, []);
-
-  const isHomePage = useMemo(() => pathname === withLang(lang) || pathname === `${withLang(lang)}/`, [lang, pathname]);
-  const isCompact = isMobileViewport || isScrolled;
+  /* ---------------- NAV LINKS ---------------- */
 
   const navLinks = useMemo(
     () => [
-      { key: 'services', label: dictionary.nav.services },
-      { key: 'process', label: dictionary.nav.process },
-      { key: 'calculator', label: CALCULATOR_LABELS[lang] },
-      { key: 'contact', label: dictionary.nav.contact }
+      { key: "services", label: dictionary.nav.services },
+      { key: "process", label: dictionary.nav.process },
+      { key: "calculator", label: CALCULATOR_LABELS[lang] },
+      { key: "contact", label: dictionary.nav.contact }
     ],
     [dictionary.nav, lang]
   );
 
+  const isHomePage = useMemo(() => {
+    return pathname === withLang(lang) || pathname === `${withLang(lang)}/`;
+  }, [pathname, lang]);
+
   const getSectionHref = useCallback(
-    (sectionId: string) => (isHomePage ? `#${sectionId}` : `${withLang(lang)}#${sectionId}`),
+    (section: string) => {
+      if (isHomePage) return `#${section}`;
+      return `${withLang(lang)}#${section}`;
+    },
     [isHomePage, lang]
   );
 
+  /* ---------------- LANGUAGE SWITCH ---------------- */
+
   const handleLocaleSwitch = useCallback(
     (nextLocale: Locale) => {
-      const basePath = pathname.replace(/^\/(en|ru|he)(?=\/|$)/, `/${nextLocale}`);
       const hash = window.location.hash;
-      const nextPath = `${basePath}${hash}`;
 
-      router.push(nextPath);
-      setIsMobileMenuOpen(false);
+      const nextPath = pathname.replace(/^\/(en|ru|he)/, `/${nextLocale}`);
+
+      router.push(`${nextPath}${hash}`);
+      setMenuOpen(false);
     },
     [pathname, router]
   );
 
-  const showCompact = isMobileViewport || isScrolled;
+  const closeMenu = () => setMenuOpen(false);
+
+  /* ---------------- RENDER ---------------- */
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 transition-all duration-300 ${
-          isScrolled ? 'border-b border-white/10 bg-black/60 backdrop-blur-md' : 'bg-transparent'
-        }`}
-      />
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-black/70 backdrop-blur-lg border-b border-white/10 py-3"
+          : "bg-transparent py-6"
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
 
-      <div className="relative mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-6">
+        {/* LOGO */}
+
         <Link
           href={withLang(lang)}
-          className="text-xl font-bold tracking-tight text-cyan-100 transition hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
-          aria-label={dictionary.siteName}
+          className="text-lg font-semibold text-cyan-100 hover:text-cyan-200"
         >
           {dictionary.siteName}
         </Link>
 
-        {!isCompact ? (
+        {/* DESKTOP MENU */}
+
+        {!isCompact && (
           <>
-            <nav aria-label="Main navigation" className="hidden items-center gap-7 text-sm font-medium tracking-wide text-slate-200 md:flex">
+            <nav className="hidden md:flex items-center gap-8 text-sm text-slate-200">
               {navLinks.map((link) => (
                 <Link
                   key={link.key}
                   href={getSectionHref(link.key)}
-                  className="transition hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
+                  className="hover:text-cyan-300 transition"
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
 
-            <div className="hidden items-center gap-2 md:flex">
-              {Object.entries(localeLabels).map(([locale, label]) => {
-                const typedLocale = locale as Locale;
-                const isActive = typedLocale === lang;
+            <div className="hidden md:flex gap-2">
+              {Object.entries(localeLabels).map(([locale]) => {
+                const l = locale as Locale;
 
                 return (
                   <button
                     key={locale}
-                    type="button"
-                    onClick={() => handleLocaleSwitch(typedLocale)}
-                    className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 ${
-                      isActive
-                        ? 'border-cyan-300/70 bg-cyan-300/20 text-cyan-100'
-                        : 'border-white/20 bg-white/5 text-slate-200 hover:border-cyan-300/40 hover:text-cyan-100'
+                    onClick={() => handleLocaleSwitch(l)}
+                    className={`px-3 py-1 rounded-full text-xs border ${
+                      l === lang
+                        ? "border-cyan-400 text-cyan-200"
+                        : "border-white/20 text-slate-200 hover:border-cyan-400"
                     }`}
-                    aria-label={`Switch language to ${label}`}
                   >
-                    {typedLocale}
+                    {l}
                   </button>
                 );
               })}
             </div>
           </>
-        ) : null}
+        )}
 
-        {isCompact ? (
+        {/* HAMBURGER */}
+
+        {isCompact && (
           <button
-            type="button"
-            aria-label="Toggle navigation menu"
-            aria-expanded={isMobileMenuOpen}
-            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-            className="rounded-xl border border-white/20 bg-white/10 p-2.5 text-slate-100 transition hover:border-cyan-300/50 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="p-2 rounded-lg border border-white/20 bg-white/5 hover:border-cyan-400"
+            aria-label="Open menu"
           >
-            <span className="sr-only">Open navigation menu</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              {menuOpen ? (
+                <path d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path d="M3 6h18M3 12h18M3 18h18" />
               )}
             </svg>
           </button>
         )}
       </div>
 
-      <div className="pointer-events-none relative mx-auto w-full max-w-7xl px-6">
-        <div
-          id="navbar-menu-panel"
-          className={`pointer-events-auto absolute left-1/2 top-2 w-[min(92vw,460px)] -translate-x-1/2 transform rounded-2xl border border-white/10 bg-black/80 p-6 shadow-xl backdrop-blur-lg transition-all duration-200 ${
-            isMobileMenuOpen && isCompact ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0 invisible'
-          }`}
-        >
-          <nav aria-label="Compact navigation" className="space-y-1">
+      {/* DROPDOWN MENU */}
+
+      {menuOpen && isCompact && (
+        <div className="absolute left-1/2 mt-3 w-[92%] max-w-md -translate-x-1/2 rounded-2xl border border-white/10 bg-black/80 backdrop-blur-xl p-6 shadow-xl">
+          <nav className="space-y-3">
             {navLinks.map((link) => (
               <Link
-                key={`mobile-${link.key}`}
+                key={link.key}
                 href={getSectionHref(link.key)}
-                onClick={closeMobileMenu}
-                className="block rounded-lg px-3 py-2 text-start text-sm font-medium text-slate-100 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
+                onClick={closeMenu}
+                className="block text-sm text-slate-100 hover:text-cyan-300"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          <div className="mt-4 flex flex-wrap gap-2 border-t border-white/10 pt-4">
-            {Object.entries(localeLabels).map(([locale, label]) => {
-              const typedLocale = locale as Locale;
-              const isActive = typedLocale === lang;
+          <div className="flex gap-2 mt-5 pt-4 border-t border-white/10">
+            {Object.entries(localeLabels).map(([locale]) => {
+              const l = locale as Locale;
+
               return (
                 <button
                   key={locale}
-                  type="button"
-                  onClick={() => handleLocaleSwitch(typedLocale)}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 ${
-                    isActive
-                      ? 'border-cyan-300/70 bg-cyan-300/20 text-cyan-100'
-                      : 'border-white/20 bg-white/5 text-slate-200 hover:border-cyan-300/40 hover:text-cyan-100'
+                  onClick={() => handleLocaleSwitch(l)}
+                  className={`px-3 py-1 rounded-full text-xs border ${
+                    l === lang
+                      ? "border-cyan-400 text-cyan-200"
+                      : "border-white/20 text-slate-200"
                   }`}
-                  aria-label={`Switch language to ${label}`}
                 >
-                  {typedLocale}
+                  {l}
                 </button>
               );
             })}
           </div>
         </div>
-      </div>
+      )}
     </header>
   );
 }
