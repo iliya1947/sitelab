@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { withLang } from '@/lib/routes';
 import type { Dictionary, Locale } from '@/src/i18n/types';
@@ -105,7 +105,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         showCompactLayout
           ? 'border-b border-white/10 bg-[rgba(10,10,15,0.85)] py-3 backdrop-blur-xl'
           : 'bg-transparent py-6'

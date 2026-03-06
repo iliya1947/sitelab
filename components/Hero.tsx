@@ -30,15 +30,15 @@ export default function Hero({ lang }: HeroProps) {
     <section
       id="hero"
       onMouseMove={handleMouseMove}
-      className="hero-premium section-glow relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#05070f] px-6 py-16 text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-10 lg:py-20"
+      className="hero-premium section-glow relative isolate z-20 overflow-hidden rounded-3xl border border-white/10 bg-[#05070f] px-6 py-16 text-white shadow-[0_35px_120px_rgba(8,8,20,0.65)] md:px-10 lg:py-20"
       style={{ '--cursor-x': '50%', '--cursor-y': '50%' } as CSSProperties}
     >
-      <div className="absolute inset-0 -z-20 bg-[#05070f]" />
-      <div className="hero-gradient-glow absolute inset-0 -z-10" />
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(10,10,15,0.3)_0%,rgba(10,10,15,0.8)_55%,rgba(8,8,14,0.96)_100%)]" />
-      <div className="hero-cursor-light absolute inset-0 -z-10" />
+      <div className="absolute inset-0 z-0 bg-[#05070f]" />
+      <div className="hero-gradient-glow absolute inset-0 z-10" />
+      <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_center,rgba(10,10,15,0.3)_0%,rgba(10,10,15,0.8)_55%,rgba(8,8,14,0.96)_100%)]" />
+      <div className="hero-cursor-light absolute inset-0 z-10" />
 
-      <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <div className="relative z-20 mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="motion-reveal is-visible text-left">
           <p className="inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100">
             {t.hero.badge}
@@ -82,7 +82,7 @@ export default function Hero({ lang }: HeroProps) {
         </div>
       </div>
 
-      <div className="mx-auto mt-14 max-w-6xl border-t border-white/10 pt-8">
+      <div className="relative z-20 mx-auto mt-14 max-w-6xl border-t border-white/10 pt-8">
         <p className="text-sm font-medium uppercase tracking-[0.16em] text-slate-300">
           {t.hero.trustedByTitle}
         </p>
