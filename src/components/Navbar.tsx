@@ -25,34 +25,21 @@ const SECTION_IDS = ['services', 'process', 'calculator', 'contact'] as const;
 export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const updateState = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      setIsScrolled(window.scrollY > 80);
-      if (!mobile) {
-        setMenuOpen(false);
-      }
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
     };
 
-    updateState();
-    window.addEventListener('resize', updateState);
-    window.addEventListener('scroll', updateState, { passive: true });
-
-    return () => {
-      window.removeEventListener('resize', updateState);
-      window.removeEventListener('scroll', updateState);
-    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isCompact = isMobile || isScrolled;
-
   useEffect(() => {
-    setMenuOpen(false);
+    setMobileMenuOpen(false);
   }, [pathname]);
 
   const isHomePath = pathname === `/${lang}`;
@@ -77,75 +64,64 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
     const currentHash = window.location.hash;
     const normalizedPath = currentPath.replace(/^\/(en|ru|he)(?=\/|$)/, `/${nextLocale}`);
     router.push(`${normalizedPath}${currentHash}`);
+    setMobileMenuOpen(false);
   };
 
-  const showDrawer = isCompact && menuOpen;
-
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6">
+    <header className="fixed top-0 z-50 w-full px-3 pt-3 md:px-6">
       <div
-        className={`mx-auto flex h-16 max-w-6xl items-center justify-between rounded-2xl border px-4 transition-[background-color,border-color,box-shadow,transform,opacity] duration-300 md:h-[72px] md:px-6 ${
-          isCompact
-            ? 'border-white/15 bg-slate-950/70 shadow-[0_20px_60px_rgba(2,6,23,0.55)] backdrop-blur-xl'
-            : 'border-white/10 bg-slate-950/45'
+        className={`mx-auto flex h-16 max-w-6xl items-center justify-between rounded-2xl border px-4 transition-all duration-300 md:h-[72px] md:px-6 ${
+          scrolled
+            ? 'border-white/15 bg-black/70 shadow-lg backdrop-blur'
+            : 'border-transparent bg-transparent shadow-none backdrop-blur-0'
         }`}
       >
-        <Link href={withLang(lang)} className="inline-flex items-center gap-2 text-base font-semibold tracking-wide text-white transition-colors hover:text-cyan-200">
-          {isCompact ? (
-            <>
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-cyan-300/50 bg-cyan-300/15 text-xs font-bold text-cyan-100">
-                SL
-              </span>
-              <span className="sr-only">{dictionary.siteName}</span>
-            </>
-          ) : (
-            dictionary.siteName
-          )}
+        <Link
+          href={withLang(lang)}
+          className="inline-flex items-center text-base font-semibold tracking-wide text-white transition-colors hover:text-cyan-200"
+        >
+          {dictionary.siteName}
         </Link>
 
-        {!isCompact ? (
-          <>
-            <nav className="hidden items-center gap-6 text-sm text-slate-200 md:flex">
-              {sectionLinks.map((link) => (
-                <Link key={link.id} href={getSectionHref(link.id)} className="transition-colors hover:text-cyan-200">
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+        <nav className="hidden items-center gap-6 text-sm text-slate-200 md:flex">
+          {sectionLinks.map((link) => (
+            <Link key={link.id} href={getSectionHref(link.id)} className="transition-colors hover:text-cyan-200">
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
-            <div className="hidden items-center gap-2 md:flex">
-              {LOCALES.map((locale) => (
-                <button
-                  key={locale}
-                  type="button"
-                  onClick={() => switchLanguage(locale)}
-                  className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
-                    locale === lang
-                      ? 'border-cyan-300/70 bg-cyan-400/15 text-cyan-100'
-                      : 'border-white/20 text-slate-200 hover:border-cyan-300/60 hover:text-cyan-100'
-                  }`}
-                >
-                  {localeLabels[locale]}
-                </button>
-              ))}
-            </div>
-          </>
-        ) : (
-          <button
-            type="button"
-            onClick={() => setMenuOpen((prev) => !prev)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-slate-100 transition-colors md:inline-flex"
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? '✕' : '☰'}
-          </button>
-        )}
+        <div className="hidden items-center gap-2 md:flex">
+          {LOCALES.map((locale) => (
+            <button
+              key={locale}
+              type="button"
+              onClick={() => switchLanguage(locale)}
+              className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
+                locale === lang
+                  ? 'border-cyan-300/70 bg-cyan-400/15 text-cyan-100'
+                  : 'border-white/20 text-slate-200 hover:border-cyan-300/60 hover:text-cyan-100'
+              }`}
+            >
+              {localeLabels[locale]}
+            </button>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-slate-100 transition-colors md:hidden"
+          aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
+        >
+          {mobileMenuOpen ? '✕' : '☰'}
+        </button>
       </div>
 
       <div
-        className={`mx-auto mt-2 max-w-6xl overflow-hidden rounded-2xl border border-white/10 bg-slate-950/85 p-4 shadow-2xl backdrop-blur-xl transition-[opacity,transform] duration-300 md:hidden ${
-          showDrawer ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'
+        className={`mx-auto mt-2 max-w-6xl overflow-hidden rounded-2xl border border-white/10 bg-slate-950/85 p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 md:hidden ${
+          mobileMenuOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'
         }`}
       >
         <nav className="space-y-1">
@@ -153,13 +129,14 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
             <Link
               key={link.id}
               href={getSectionHref(link.id)}
-              onClick={() => setMenuOpen(false)}
+              onClick={() => setMobileMenuOpen(false)}
               className="block rounded-lg px-3 py-2 text-sm text-slate-100 transition-colors hover:bg-white/10"
             >
               {link.label}
             </Link>
           ))}
         </nav>
+
         <div className="mt-4 flex flex-wrap gap-2 border-t border-white/10 pt-3">
           {LOCALES.map((locale) => (
             <button
