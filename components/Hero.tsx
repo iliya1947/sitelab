@@ -6,15 +6,11 @@ import { useTranslations } from '@/src/hooks/useTranslations';
 import type { Locale } from '@/src/i18n';
 import Link from 'next/link';
 
-const cardPositions = [
-  'start-2 top-4',
-  'end-4 top-20',
-  'start-10 bottom-10',
-  'end-8 bottom-2'
-];
+const cardPositions = ['start-2 top-4', 'end-4 top-20', 'start-10 bottom-10', 'end-8 bottom-6'];
 
 export default function Hero({ lang }: { lang: Locale }) {
   const t = useTranslations();
+  const heroCards = t.hero.statCards.slice(0, 4);
 
   return (
     <section id="hero" className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 px-6 py-20 md:px-10">
@@ -43,11 +39,12 @@ export default function Hero({ lang }: { lang: Locale }) {
           </div>
         </div>
 
-        <div className="relative hidden min-h-[390px] rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl lg:block">
-          {t.hero.statCards.map((card, index) => (
+        <div className="relative hidden min-h-[390px] rounded-3xl border border-white/10 bg-white/[0.03] p-4 lg:block">
+          {heroCards.map((card, index) => (
             <article
               key={card.title}
-              className={`absolute w-56 rounded-2xl border border-cyan-100/20 bg-slate-900/65 p-4 shadow-[0_14px_35px_rgba(2,6,23,0.55)] ${cardPositions[index] ?? ''}`} style={{ animation: `floatCard ${5 + index}s ease-in-out ${index * 0.2}s infinite` }}
+              className={`absolute w-56 rounded-2xl border border-cyan-100/20 bg-slate-900/65 p-4 shadow-[0_14px_35px_rgba(2,6,23,0.55)] motion-safe:animate-float-card ${cardPositions[index] ?? ''}`}
+              style={{ animationDelay: `${index * 0.25}s`, animationDuration: `${6 + index * 0.4}s` }}
             >
               <p className="text-[11px] uppercase tracking-[0.12em] text-cyan-100/80">{card.title}</p>
               <p className="mt-2 text-xl font-bold text-white">{card.value}</p>
