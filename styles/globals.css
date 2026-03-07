@@ -92,8 +92,21 @@ html.a11y-large-text {
 
 
 @keyframes floatCard {
-  0%,100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.92;
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+    opacity: 1;
+  }
+}
+
+.animate-float-card {
+  will-change: transform, opacity;
+  animation-name: floatCard;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

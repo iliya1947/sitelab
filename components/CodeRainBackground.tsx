@@ -7,9 +7,8 @@ type Drop = {
   y: number;
   speed: number;
   opacity: number;
-  fontSize: number;
+  font: string;
   drift: number;
-  blur: number;
   color: string;
   text: string;
 };
@@ -35,11 +34,9 @@ export default function CodeRainBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dropsRef = useRef<Drop[]>([]);
   const rafRef = useRef<number>();
+  const reducedMotionRef = useRef(false);
 
-  const prefersReducedMotion = useMemo(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }, []);
+  const prefersReducedMotion = useMemo(() => (typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false), []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -57,16 +54,23 @@ export default function CodeRainBackground() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const mobile = window.innerWidth < 768;
-      const count = prefersReducedMotion ? 20 : mobile ? 28 : 46;
+      reducedMotionRef.current = prefersReducedMotion;
+
+      if (mobile) {
+        dropsRef.current = [];
+        ctx.clearRect(0, 0, width, height);
+        return;
+      }
+
+      const count = prefersReducedMotion ? 24 : 56;
 
       dropsRef.current = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
         speed: prefersReducedMotion ? 0.18 : 0.45 + Math.random() * 1.2,
         opacity: 0.18 + Math.random() * 0.5,
-        fontSize: 12 + Math.random() * 10,
+        font: `${12 + Math.random() * 10}px ui-monospace, SFMono-Regular, Menlo, monospace`,
         drift: -0.3 + Math.random() * 0.6,
-        blur: Math.random() * 4,
         color: randomFrom(palette),
         text: randomFrom(codeLines)
       }));
@@ -76,18 +80,24 @@ export default function CodeRainBackground() {
       const { width, height } = canvas.getBoundingClientRect();
       ctx.clearRect(0, 0, width, height);
 
+      if (!dropsRef.current.length) {
+        rafRef.current = undefined;
+        return;
+      }
+
       ctx.fillStyle = 'rgba(2,6,23,0.2)';
       ctx.fillRect(0, 0, width, height);
 
       for (const drop of dropsRef.current) {
-        ctx.font = `${drop.fontSize}px ui-monospace, SFMono-Regular, Menlo, monospace`;
+        ctx.font = drop.font;
         ctx.fillStyle = drop.color;
         ctx.globalAlpha = drop.opacity;
-        ctx.filter = `blur(${drop.blur}px)`;
         ctx.fillText(drop.text, drop.x, drop.y);
 
-        drop.y += drop.speed;
-        drop.x += drop.drift;
+        if (!reducedMotionRef.current) {
+          drop.y += drop.speed;
+          drop.x += drop.drift;
+        }
 
         if (drop.y > height + 50) {
           drop.y = -30;
@@ -97,16 +107,28 @@ export default function CodeRainBackground() {
       }
 
       ctx.globalAlpha = 1;
-      ctx.filter = 'none';
       rafRef.current = requestAnimationFrame(render);
     };
 
+    const handleResize = () => {
+      setup();
+      if (!rafRef.current && dropsRef.current.length) {
+        rafRef.current = requestAnimationFrame(render);
+      }
+      if (rafRef.current && !dropsRef.current.length) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = undefined;
+      }
+    };
+
     setup();
-    render();
-    window.addEventListener('resize', setup);
+    if (dropsRef.current.length) {
+      rafRef.current = requestAnimationFrame(render);
+    }
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('resize', setup);
+      window.removeEventListener('resize', handleResize);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [prefersReducedMotion]);
