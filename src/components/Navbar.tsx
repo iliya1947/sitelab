@@ -26,27 +26,30 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isCompact, setIsCompact] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleViewportState = () => {
+    const updateState = () => {
       const mobile = window.innerWidth < 768;
-      const scrolled = window.scrollY > 20;
-      setIsCompact(mobile || scrolled);
+      setIsMobile(mobile);
+      setIsScrolled(window.scrollY > 80);
       if (!mobile) {
         setMenuOpen(false);
       }
     };
 
-    handleViewportState();
-    window.addEventListener('scroll', handleViewportState, { passive: true });
-    window.addEventListener('resize', handleViewportState);
+    updateState();
+    window.addEventListener('resize', updateState);
+    window.addEventListener('scroll', updateState, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleViewportState);
-      window.removeEventListener('resize', handleViewportState);
+      window.removeEventListener('resize', updateState);
+      window.removeEventListener('scroll', updateState);
     };
   }, []);
+
+  const isCompact = isMobile || isScrolled;
 
   useEffect(() => {
     setMenuOpen(false);
