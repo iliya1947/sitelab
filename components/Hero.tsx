@@ -13,12 +13,10 @@ export default function Hero({ lang }: { lang: Locale }) {
   const heroCards = t.hero.statCards.slice(0, 4);
 
   return (
-    <section id="hero" className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 px-6 py-20 md:px-10">
-      <div className="absolute inset-0">
-        <CodeRainBackground />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_15%,rgba(34,211,238,0.2),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(139,92,246,0.2),transparent_42%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(2,6,23,0.1),rgba(2,6,23,0.82)_58%,rgba(2,6,23,0.96)_100%)]" />
-      </div>
+    <section id="hero" className="relative z-0 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 px-6 py-20 md:px-10">
+      <CodeRainBackground />
+
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(2,6,23,0.1),rgba(2,6,23,0.82)_58%,rgba(2,6,23,0.96)_100%)]" />
 
       <div className="relative z-10 mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="text-center lg:text-start">
