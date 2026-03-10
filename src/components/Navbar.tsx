@@ -75,12 +75,12 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   };
 
   return (
-    <header className="fixed left-1/2 top-5 z-50 w-[calc(100%-40px)] max-w-[1100px] -translate-x-1/2">
+    <header className="navbar-wrapper fixed left-0 top-[22px] z-[1000] flex w-full justify-center pointer-events-none">
       <div
-        className={`relative mx-auto flex items-center justify-between rounded-2xl border px-4 py-3 backdrop-blur-2xl transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] md:px-6 ${
+        className={`navbar-container pointer-events-auto relative flex w-[calc(100%-48px)] max-w-[1120px] items-center justify-between rounded-[18px] border px-[22px] backdrop-blur-[16px] transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] ${
           scrolled
-            ? 'border-white/20 bg-slate-900/75 shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_28px_rgba(59,130,246,0.16)]'
-            : 'border-white/10 bg-slate-900/55 shadow-[0_20px_60px_rgba(0,0,0,0.48),0_0_18px_rgba(59,130,246,0.08)] md:py-4'
+            ? 'border-white/20 bg-[rgba(10,14,28,0.68)] py-[10px] shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_34px_rgba(59,130,246,0.2)]'
+            : 'border-white/10 bg-[rgba(10,14,28,0.55)] py-[12px] shadow-[0_20px_60px_rgba(0,0,0,0.55),0_0_30px_rgba(59,130,246,0.12)]'
         }`}
       >
         <Link
@@ -90,7 +90,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
           {dictionary.siteName}
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-7 px-6 text-sm text-white/80 md:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-[26px] px-6 text-[14px] text-white/80 md:flex">
           {sectionLinks.map((link) => (
             <Link
               key={link.id}
@@ -125,19 +125,21 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
           ))}
         </div>
 
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-slate-100 transition-colors md:hidden"
-          aria-label="Toggle menu"
-          aria-expanded={mobileMenuOpen}
-        >
-          {mobileMenuOpen ? '✕' : '☰'}
-        </button>
+        <div className="md:hidden">
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-slate-100 transition-colors"
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? '✕' : '☰'}
+          </button>
+        </div>
       </div>
 
       <div
-        className={`mt-2 overflow-hidden rounded-2xl border border-white/15 bg-slate-900/85 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-2xl transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] md:hidden ${
+        className={`navbar-container pointer-events-auto mt-2 w-[calc(100%-48px)] max-w-[1120px] overflow-hidden rounded-[18px] border border-white/15 bg-[rgba(10,14,28,0.86)] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.55),0_0_24px_rgba(59,130,246,0.16)] backdrop-blur-[16px] transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] md:hidden ${
           mobileMenuOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-3 opacity-0'
         }`}
       >
