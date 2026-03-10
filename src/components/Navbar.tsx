@@ -20,6 +20,12 @@ const CALCULATOR_LABELS: Record<Locale, string> = {
   he: 'מחשבון'
 };
 
+const CTA_LABELS: Record<Locale, string> = {
+  en: 'Start project',
+  ru: 'Начать проект',
+  he: 'התחל פרויקט'
+};
+
 const SECTION_IDS = ['services', 'process', 'calculator', 'contact'] as const;
 
 export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) {
@@ -30,7 +36,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 20);
     };
 
     handleScroll();
@@ -56,6 +62,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   );
 
   const getSectionHref = (id: (typeof SECTION_IDS)[number]) => (isHomePath ? `#${id}` : `${withLang(lang)}#${id}`);
+  const ctaHref = getSectionHref('contact');
 
   const switchLanguage = (nextLocale: Locale) => {
     if (typeof window === 'undefined') return;
@@ -68,30 +75,40 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   };
 
   return (
-    <header className="fixed top-0 z-50 w-full px-3 pt-3 md:px-6">
+    <header className="fixed left-1/2 top-5 z-50 w-[calc(100%-40px)] max-w-[1100px] -translate-x-1/2">
       <div
-        className={`mx-auto flex h-16 max-w-6xl items-center justify-between rounded-2xl border px-4 transition-all duration-300 md:h-[72px] md:px-6 ${
+        className={`relative mx-auto flex items-center justify-between rounded-2xl border px-4 py-3 backdrop-blur-2xl transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] md:px-6 ${
           scrolled
-            ? 'border-white/15 bg-black/70 shadow-lg backdrop-blur'
-            : 'border-transparent bg-transparent shadow-none backdrop-blur-0'
+            ? 'border-white/20 bg-slate-900/75 shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_28px_rgba(59,130,246,0.16)]'
+            : 'border-white/10 bg-slate-900/55 shadow-[0_20px_60px_rgba(0,0,0,0.48),0_0_18px_rgba(59,130,246,0.08)] md:py-4'
         }`}
       >
         <Link
           href={withLang(lang)}
-          className="inline-flex items-center text-base font-semibold tracking-wide text-white transition-colors hover:text-cyan-200"
+          className="inline-flex items-center text-base font-semibold tracking-wide text-white transition-colors hover:text-white/90"
         >
           {dictionary.siteName}
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm text-slate-200 md:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-7 px-6 text-sm text-white/80 md:flex">
           {sectionLinks.map((link) => (
-            <Link key={link.id} href={getSectionHref(link.id)} className="transition-colors hover:text-cyan-200">
+            <Link
+              key={link.id}
+              href={getSectionHref(link.id)}
+              className="transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] hover:text-white hover:[text-shadow:0_0_10px_rgba(59,130,246,.6)]"
+            >
               {link.label}
             </Link>
           ))}
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          <Link
+            href={ctaHref}
+            className="rounded-[10px] bg-gradient-to-r from-blue-500 to-violet-500 px-[18px] py-[10px] text-sm font-semibold text-white transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(59,130,246,.5)]"
+          >
+            {CTA_LABELS[lang]}
+          </Link>
           {LOCALES.map((locale) => (
             <button
               key={locale}
@@ -120,8 +137,8 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
       </div>
 
       <div
-        className={`mx-auto mt-2 max-w-6xl overflow-hidden rounded-2xl border border-white/10 bg-slate-950/85 p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 md:hidden ${
-          mobileMenuOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'
+        className={`mt-2 overflow-hidden rounded-2xl border border-white/15 bg-slate-900/85 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-2xl transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] md:hidden ${
+          mobileMenuOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-3 opacity-0'
         }`}
       >
         <nav className="space-y-1">
@@ -130,12 +147,20 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
               key={link.id}
               href={getSectionHref(link.id)}
               onClick={() => setMobileMenuOpen(false)}
-              className="block rounded-lg px-3 py-2 text-sm text-slate-100 transition-colors hover:bg-white/10"
+              className="block rounded-lg px-3 py-2 text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
             >
               {link.label}
             </Link>
           ))}
         </nav>
+
+        <Link
+          href={ctaHref}
+          onClick={() => setMobileMenuOpen(false)}
+          className="mt-3 inline-flex w-full items-center justify-center rounded-[10px] bg-gradient-to-r from-blue-500 to-violet-500 px-[18px] py-[10px] text-sm font-semibold text-white transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] hover:shadow-[0_10px_30px_rgba(59,130,246,.45)]"
+        >
+          {CTA_LABELS[lang]}
+        </Link>
 
         <div className="mt-4 flex flex-wrap gap-2 border-t border-white/10 pt-3">
           {LOCALES.map((locale) => (
