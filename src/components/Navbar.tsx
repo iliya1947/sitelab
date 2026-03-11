@@ -105,23 +105,23 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   return (
     <header className="navbar-wrapper pointer-events-none fixed left-0 right-0 top-5 z-[1000] flex justify-center">
       <div
-        className={`navbar-container pointer-events-auto relative flex w-[calc(100%-32px)] max-w-[1100px] items-center justify-between rounded-[999px] border border-white/10 bg-[rgba(12,16,30,0.55)] px-[18px] py-[10px] shadow-[0_10px_30px_rgba(0,0,0,0.35),0_0_20px_rgba(80,120,255,0.12)] backdrop-blur-[18px] [transition:transform_.35s_cubic-bezier(.4,0,.2,1),opacity_.25s_ease] ${
+        className={`navbar-container pointer-events-auto relative flex w-[calc(100%-32px)] max-w-[1080px] items-center justify-between rounded-[999px] border border-[rgba(255,255,255,0.08)] bg-[rgba(12,16,30,0.55)] px-5 py-[10px] shadow-[0_10px_30px_rgba(0,0,0,0.35),0_0_20px_rgba(80,120,255,0.12),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-[20px] [transition:transform_.35s_cubic-bezier(.4,0,.2,1),opacity_.25s_ease] ${
           isNavVisible ? 'translate-y-0 opacity-100' : '-translate-y-[140%] opacity-0'
         }`}
       >
         <Link
           href={withLang(lang)}
-          className="inline-flex items-center text-base font-semibold tracking-wide text-white transition-colors hover:text-white/90"
+          className="inline-flex items-center text-base font-semibold tracking-[0.02em] text-white transition-colors duration-300 hover:text-white/90"
         >
           {dictionary.siteName}
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-[26px] px-6 text-[14px] text-white/80 md:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-7 px-7 text-sm font-medium tracking-[0.02em] text-[rgba(255,255,255,0.75)] md:flex">
           {sectionLinks.map((link) => (
             <Link
               key={link.id}
               href={getSectionHref(link.id)}
-              className="transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] hover:text-white hover:[text-shadow:0_0_10px_rgba(59,130,246,.6)]"
+              className="[transition:color_.25s_ease,text-shadow_.25s_ease] hover:text-white hover:[text-shadow:0_0_8px_rgba(120,140,255,0.6)]"
             >
               {link.label}
             </Link>
@@ -131,7 +131,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
         <div className="hidden items-center gap-2 md:flex">
           <Link
             href={ctaHref}
-            className="rounded-[10px] bg-gradient-to-r from-blue-500 to-violet-500 px-[18px] py-[10px] text-sm font-semibold text-white transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(59,130,246,.5)]"
+            className="rounded-[10px] bg-[linear-gradient(135deg,rgba(100,120,255,0.9),rgba(70,90,255,0.9))] px-[18px] py-[10px] text-sm font-semibold text-white shadow-[0_4px_14px_rgba(80,100,255,0.45)] [transition:transform_.25s_ease,box-shadow_.25s_ease] hover:-translate-y-px hover:shadow-[0_8px_22px_rgba(80,100,255,0.6)]"
           >
             {CTA_LABELS[lang]}
           </Link>
@@ -140,7 +140,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
               key={locale}
               type="button"
               onClick={() => switchLanguage(locale)}
-              className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
+              className={`rounded-full border px-3 py-1.5 text-xs transition-colors duration-300 ${
                 locale === lang
                   ? 'border-cyan-300/70 bg-cyan-400/15 text-cyan-100'
                   : 'border-white/20 text-slate-200 hover:border-cyan-300/60 hover:text-cyan-100'
@@ -155,7 +155,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-slate-100 transition-colors"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-slate-100 transition-colors duration-300"
             aria-label="Toggle menu"
             aria-expanded={mobileMenuOpen}
           >
