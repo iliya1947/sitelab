@@ -4,7 +4,7 @@ import { withLang } from '@/lib/routes';
 import type { Dictionary, Locale } from '@/src/i18n/types';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 type NavbarProps = {
   lang: Locale;
@@ -31,18 +31,46 @@ const SECTION_IDS = ['services', 'process', 'calculator', 'contact'] as const;
 export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [scrolled, setScrolled] = useState(false);
+  const [isNavVisible, setIsNavVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
+  const isTicking = useRef(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    lastScrollY.current = window.scrollY;
+
+    const updateVisibility = () => {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY.current;
+
+      if (delta > 8 && currentScrollY > 20 && !mobileMenuOpen) {
+        setIsNavVisible(false);
+      } else if (delta < 0) {
+        setIsNavVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+      isTicking.current = false;
     };
 
-    handleScroll();
+    const handleScroll = () => {
+      if (isTicking.current) return;
+      isTicking.current = true;
+      window.requestAnimationFrame(updateVisibility);
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      setIsNavVisible(true);
+    }
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -75,12 +103,10 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   };
 
   return (
-    <header className="navbar-wrapper fixed left-0 top-[22px] z-[1000] flex w-full justify-center pointer-events-none">
+    <header className="navbar-wrapper pointer-events-none fixed left-0 right-0 top-5 z-[1000] flex justify-center">
       <div
-        className={`navbar-container pointer-events-auto relative flex w-[calc(100%-48px)] max-w-[1120px] items-center justify-between rounded-[18px] border px-[22px] backdrop-blur-[16px] transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] ${
-          scrolled
-            ? 'border-white/20 bg-[rgba(10,14,28,0.68)] py-[10px] shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_34px_rgba(59,130,246,0.2)]'
-            : 'border-white/10 bg-[rgba(10,14,28,0.55)] py-[12px] shadow-[0_20px_60px_rgba(0,0,0,0.55),0_0_30px_rgba(59,130,246,0.12)]'
+        className={`navbar-container pointer-events-auto relative flex w-[calc(100%-32px)] max-w-[1100px] items-center justify-between rounded-[999px] border border-white/10 bg-[rgba(12,16,30,0.55)] px-[18px] py-[10px] shadow-[0_10px_30px_rgba(0,0,0,0.35),0_0_20px_rgba(80,120,255,0.12)] backdrop-blur-[18px] [transition:transform_.35s_cubic-bezier(.4,0,.2,1),opacity_.25s_ease] ${
+          isNavVisible ? 'translate-y-0 opacity-100' : '-translate-y-[140%] opacity-0'
         }`}
       >
         <Link
