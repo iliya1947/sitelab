@@ -75,27 +75,27 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   };
 
   return (
-    <header className="navbar-wrapper fixed left-0 top-[22px] z-[1000] flex w-full justify-center pointer-events-none">
+    <header className="navbar-wrapper pointer-events-none fixed left-0 top-5 z-[1000] flex w-full flex-col items-center justify-center">
       <div
-        className={`navbar-container pointer-events-auto relative flex w-[calc(100%-48px)] max-w-[1120px] items-center justify-between rounded-[18px] border px-[22px] backdrop-blur-[16px] transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] ${
+        className={`navbar-container pointer-events-auto relative flex w-[calc(100%-40px)] max-w-[980px] items-center justify-between rounded-full border px-3 py-2 shadow-[0_18px_55px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] ${
           scrolled
-            ? 'border-white/20 bg-[rgba(10,14,28,0.68)] py-[10px] shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_34px_rgba(59,130,246,0.2)]'
-            : 'border-white/10 bg-[rgba(10,14,28,0.55)] py-[12px] shadow-[0_20px_60px_rgba(0,0,0,0.55),0_0_30px_rgba(59,130,246,0.12)]'
+            ? 'border-white/20 bg-[rgba(9,12,24,0.84)]'
+            : 'border-white/15 bg-[rgba(11,15,30,0.72)]'
         }`}
       >
         <Link
           href={withLang(lang)}
-          className="inline-flex items-center text-base font-semibold tracking-wide text-white transition-colors hover:text-white/90"
+          className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors hover:text-cyan-100"
         >
           {dictionary.siteName}
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-[26px] px-6 text-[14px] text-white/80 md:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-1 px-5 text-[14px] text-white/80 md:flex">
           {sectionLinks.map((link) => (
             <Link
               key={link.id}
               href={getSectionHref(link.id)}
-              className="transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] hover:text-white hover:[text-shadow:0_0_10px_rgba(59,130,246,.6)]"
+              className="rounded-full px-4 py-2 transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] hover:bg-white/10 hover:text-white"
             >
               {link.label}
             </Link>
@@ -105,7 +105,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
         <div className="hidden items-center gap-2 md:flex">
           <Link
             href={ctaHref}
-            className="rounded-[10px] bg-gradient-to-r from-blue-500 to-violet-500 px-[18px] py-[10px] text-sm font-semibold text-white transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(59,130,246,.5)]"
+            className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-slate-950 transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] hover:bg-cyan-100"
           >
             {CTA_LABELS[lang]}
           </Link>
@@ -114,10 +114,10 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
               key={locale}
               type="button"
               onClick={() => switchLanguage(locale)}
-              className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
+              className={`rounded-full border px-3 py-1.5 text-[11px] transition-colors ${
                 locale === lang
-                  ? 'border-cyan-300/70 bg-cyan-400/15 text-cyan-100'
-                  : 'border-white/20 text-slate-200 hover:border-cyan-300/60 hover:text-cyan-100'
+                  ? 'border-cyan-300/80 bg-cyan-400/15 text-cyan-100'
+                  : 'border-white/20 text-slate-100 hover:border-cyan-300/60 hover:text-cyan-100'
               }`}
             >
               {localeLabels[locale]}
@@ -129,7 +129,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-slate-100 transition-colors"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-slate-100 transition-colors"
             aria-label="Toggle menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -139,7 +139,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
       </div>
 
       <div
-        className={`navbar-container pointer-events-auto mt-2 w-[calc(100%-48px)] max-w-[1120px] overflow-hidden rounded-[18px] border border-white/15 bg-[rgba(10,14,28,0.86)] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.55),0_0_24px_rgba(59,130,246,0.16)] backdrop-blur-[16px] transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] md:hidden ${
+        className={`navbar-container pointer-events-auto mt-2 w-[calc(100%-40px)] max-w-[980px] overflow-hidden rounded-[22px] border border-white/15 bg-[rgba(10,14,28,0.9)] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-xl transition-all duration-300 [transition-timing-function:cubic-bezier(.16,1,.3,1)] md:hidden ${
           mobileMenuOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-3 opacity-0'
         }`}
       >
