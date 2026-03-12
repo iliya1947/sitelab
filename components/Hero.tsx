@@ -1,56 +1,65 @@
 'use client';
 
-import CodeRainBackground from '@/components/CodeRainBackground';
 import { withLang } from '@/lib/routes';
 import { useTranslations } from '@/src/hooks/useTranslations';
 import type { Locale } from '@/src/i18n';
 import Link from 'next/link';
 
-const cardPositions = ['start-2 top-4', 'end-4 top-20', 'start-10 bottom-10', 'end-8 bottom-6'];
-
 export default function Hero({ lang }: { lang: Locale }) {
   const t = useTranslations();
-  const heroCards = t.hero.statCards.slice(0, 4);
+  const previewCard = t.hero.statCards[0];
 
   return (
-    <section id="hero" className="relative z-0 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 px-6 py-20 md:px-10">
-      <CodeRainBackground />
+    <section id="hero" className="relative overflow-hidden pt-32 pb-20">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f2c] via-[#0b1736] to-[#050914]" aria-hidden="true" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(56,189,248,0.15),transparent_60%)]" aria-hidden="true" />
 
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(2,6,23,0.1),rgba(2,6,23,0.82)_58%,rgba(2,6,23,0.96)_100%)]" />
+      <div className="relative mx-auto max-w-6xl px-6 text-center">
+        <p className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-widest text-white/80">
+          {t.hero.badge}
+        </p>
 
-      <div className="relative z-10 mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-        <div className="text-center lg:text-start">
-          <p className="inline-flex rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-1 text-xs uppercase tracking-[0.18em] text-cyan-100">{t.hero.badge}</p>
-          <h1 className="mt-6 text-5xl font-black leading-[0.94] tracking-tight md:text-7xl">
-            <span>{t.hero.title1} </span>
-            <span className="bg-gradient-to-r from-cyan-100 via-blue-200 to-violet-200 bg-clip-text text-transparent">{t.hero.title2}</span>
-            <span> {t.hero.title3}</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-slate-200 lg:mx-0">{t.hero.subtitle}</p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
-            <Link href={withLang(lang, '/contact')} className="primary-btn rounded-full px-7 py-3 font-semibold">
-              {t.hero.primaryCTA}
-            </Link>
-            <Link href={withLang(lang, '/services')} className="btn-interactive rounded-full border border-white/25 bg-white/5 px-7 py-3 font-semibold text-white">
-              {t.hero.secondaryCTA}
-            </Link>
-          </div>
-        </div>
+        <h1 className="mx-auto mt-6 max-w-3xl text-4xl font-bold tracking-tight text-white md:text-6xl">
+          {t.hero.title1} {t.hero.title2} {t.hero.title3}
+        </h1>
 
-        <div className="relative hidden min-h-[390px] rounded-3xl border border-white/10 bg-white/[0.03] p-4 lg:block">
-          {heroCards.map((card, index) => (
-            <article
-              key={card.title}
-              className={`absolute w-56 rounded-2xl border border-cyan-100/20 bg-slate-900/65 p-4 shadow-[0_14px_35px_rgba(2,6,23,0.55)] motion-safe:animate-float-card ${cardPositions[index] ?? ''}`}
-              style={{ animationDelay: `${index * 0.25}s`, animationDuration: `${6 + index * 0.4}s` }}
-            >
-              <p className="text-[11px] uppercase tracking-[0.12em] text-cyan-100/80">{card.title}</p>
-              <p className="mt-2 text-xl font-bold text-white">{card.value}</p>
-              <p className="mt-2 text-xs text-slate-200">{card.detail}</p>
-            </article>
-          ))}
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-white/70">{t.hero.subtitle}</p>
+
+        <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+          <Link
+            href={withLang(lang, '/contact')}
+            className="rounded-full bg-gradient-to-r from-cyan-400 to-indigo-500 px-7 py-3 font-semibold text-black transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1736]"
+          >
+            {t.hero.primaryCTA}
+          </Link>
+          <Link
+            href={withLang(lang, '/services')}
+            className="rounded-full border border-white/20 px-7 py-3 text-white transition-colors duration-200 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1736]"
+          >
+            {t.hero.secondaryCTA}
+          </Link>
         </div>
       </div>
+
+      {previewCard ? (
+        <article className="pointer-events-none absolute bottom-0 left-1/2 w-[320px] -translate-x-1/2 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm animate-[float_6s_ease-in-out_infinite]">
+          <p className="text-[11px] uppercase tracking-[0.14em] text-cyan-100/80">{previewCard.title}</p>
+          <p className="mt-2 text-xl font-bold text-white">{previewCard.value}</p>
+          <p className="mt-1 text-sm text-white/70">{previewCard.detail}</p>
+        </article>
+      ) : null}
+
+      <style jsx global>{`
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+        }
+      `}</style>
     </section>
   );
 }
