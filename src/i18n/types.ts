@@ -99,3 +99,5 @@ export type Dictionary = {
 
 export const isLocale = (value: string): value is Locale =>
   locales.includes(value as Locale);
+
+export const isLang = isLocale;
