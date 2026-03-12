@@ -3,15 +3,15 @@ import { AccessibilityProvider } from '@/components/accessibility/AccessibilityP
 import HtmlLanguageSync from '@/components/accessibility/HtmlLanguageSync';
 import Navbar from '@/src/components/Navbar';
 import { DictionaryProvider } from '@/src/i18n/DictionaryProvider';
-import { getDictionary, isLocale, locales, Locale } from '@/src/i18n';
-import { notFound } from 'next/navigation';
+import { getDictionary, isLang, locales, Locale } from '@/src/i18n';
+import { redirect } from 'next/navigation';
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
 export default async function LangLayout({ children, params }: { children: React.ReactNode; params: { lang: string } }) {
-  if (!isLocale(params.lang)) notFound();
+  if (!isLang(params.lang)) redirect('/he');
 
   const lang = params.lang as Locale;
   const dictionary = await getDictionary(lang);
