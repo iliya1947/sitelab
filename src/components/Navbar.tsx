@@ -103,7 +103,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   };
 
   return (
-    <header className="navbar-wrapper pointer-events-none fixed left-0 right-0 top-5 z-[1000] flex justify-center">
+    <header className="navbar-wrapper pointer-events-none fixed left-0 right-0 top-5 z-[1000] flex flex-col items-center justify-center md:flex-row">
       <div
         className={`navbar-container pointer-events-auto relative flex w-[calc(100%-32px)] max-w-[1080px] items-center justify-between rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(12,16,30,0.55)] px-4 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.35),0_0_20px_rgba(80,120,255,0.12),inset_0_1px_0_rgba(255,255,255,0.05)] md:rounded-full md:px-6 md:py-3 backdrop-blur-[20px] [transition:transform_.35s_cubic-bezier(.4,0,.2,1),opacity_.25s_ease] ${
           isNavVisible ? 'translate-y-0 opacity-100' : '-translate-y-[140%] opacity-0'
