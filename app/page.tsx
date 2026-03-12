@@ -1,15 +1,31 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { locales } from '@/src/i18n';
+const supported = ['he', 'en', 'ru'] as const;
+const fallback = 'he';
 
-export default function IndexPage() {
-  const acceptLanguage = headers().get('accept-language') ?? '';
-
-  const preferredLocale = acceptLanguage
+function parseAcceptLanguage(header: string) {
+  return header
     .split(',')
-    .map((entry) => entry.trim().split(';')[0]?.split('-')[0]?.toLowerCase())
-    .find((locale): locale is (typeof locales)[number] => locales.includes(locale as (typeof locales)[number]));
+    .map((item) => {
+      const [lang, q] = item.trim().split(';q=');
 
-  redirect(`/${preferredLocale ?? 'he'}`);
+      return {
+        lang: lang.split('-')[0],
+        q: q ? parseFloat(q) : 1,
+      };
+    })
+    .sort((a, b) => b.q - a.q);
+}
+
+export default function RootPage() {
+  const accept = headers().get('accept-language') || '';
+
+  const parsed = parseAcceptLanguage(accept);
+
+  const preferred = parsed.find((item) => supported.includes(item.lang as (typeof supported)[number]));
+
+  const locale = preferred?.lang || fallback;
+
+  redirect(`/${locale}`);
 }
