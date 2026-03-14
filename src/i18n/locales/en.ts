@@ -7,10 +7,16 @@ export const en: Dictionary = {
   nav: { home: 'Home', services: 'Services', process: 'Process', contact: 'Contact' },
   hero: {
     badge: 'Premium web engineering',
+    title: {
+      line1: 'High-Performance Websites',
+      line2: 'That Turn Visitors Into Clients'
+    },
     title1: 'Build High-End',
     title2: 'Custom Websites',
     title3: 'That Convert',
-    subtitle: 'We design and build high-performance websites for startups, tech companies and premium brands that need authority, speed, and measurable growth.',
+    subtitle: 'Custom websites engineered for speed, SEO visibility and real business growth.',
+    ctaPrimary: 'Start a Project',
+    ctaSecondary: 'Calculate Website Price',
     primaryCTA: 'Start your project',
     secondaryCTA: 'View our work',
     trustedByTitle: 'Trusted by startups and growing tech teams.',

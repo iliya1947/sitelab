@@ -23,11 +23,13 @@ export default function Hero({ lang }: { lang: Locale }) {
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 text-center">
         <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-widest text-white/70">
-          {t.hero.badge || 'Next-gen Web Engineering'}
+          {t.hero.badge}
         </p>
 
         <h1 className="mx-auto mt-6 max-w-3xl bg-gradient-to-r from-white via-cyan-300 to-indigo-400 bg-clip-text text-3xl font-bold leading-tight tracking-tight text-transparent md:text-6xl">
-          {t.hero.title1} {t.hero.title2} {t.hero.title3}
+          {t.hero.title.line1}
+          <br />
+          {t.hero.title.line2}
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-lg text-white/70">{t.hero.subtitle}</p>
@@ -36,16 +38,16 @@ export default function Hero({ lang }: { lang: Locale }) {
           <Link
             href={withLang(lang, '/contact')}
             className="rounded-full bg-gradient-to-r from-cyan-400 to-indigo-500 px-8 py-3 font-semibold text-black transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1736]"
-            aria-label={t.hero.primaryCTA}
+            aria-label={t.hero.ctaPrimary}
           >
-            {t.hero.primaryCTA}
+            {t.hero.ctaPrimary}
           </Link>
           <Link
             href={withLang(lang, '/services')}
             className="rounded-full border border-white/20 px-8 py-3 text-white transition-colors duration-200 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1736]"
-            aria-label={t.hero.secondaryCTA}
+            aria-label={t.hero.ctaSecondary}
           >
-            {t.hero.secondaryCTA}
+            {t.hero.ctaSecondary}
           </Link>
         </div>
       </div>
