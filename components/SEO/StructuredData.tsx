@@ -1,10 +1,12 @@
+import { siteConfig } from '@/src/config/site';
+
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'SiteLab',
-  url: 'https://sitelab.co.il',
-  logo: 'https://sitelab.co.il/logo.png',
-  description: 'High-performance website development studio',
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: `${siteConfig.url}${siteConfig.logo}`,
+  description: siteConfig.description,
   areaServed: 'Israel',
   makesOffer: [
     {
