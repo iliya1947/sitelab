@@ -29,10 +29,16 @@ export type Dictionary = {
   };
   hero: {
     badge: string;
+    title: {
+      line1: string;
+      line2: string;
+    };
     title1: string;
     title2: string;
     title3: string;
     subtitle: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
     primaryCTA: string;
     secondaryCTA: string;
     trustedByTitle: string;
