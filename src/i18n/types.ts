@@ -47,6 +47,10 @@ export type Dictionary = {
   };
   audiences: { title: string; items: string[] };
   servicesSection: { title: string; cta: string };
+  servicesPage: {
+    title: string;
+    description: string;
+  };
   techStack: {
     title: string;
     subtitle: string;
