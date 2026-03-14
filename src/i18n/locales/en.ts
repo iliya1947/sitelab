@@ -51,6 +51,15 @@ export const en: Dictionary = {
   whyUs: { title: 'Why teams choose SiteLab', points: ['Transparent pricing', 'Fast iterations', 'Accessible interfaces', 'Production-ready codebase'] },
   stack: { title: 'Technology stack', items: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Vercel'] },
   process: { title: 'How we work', steps: ['Discovery', 'Planning', 'Design', 'Development', 'Launch', 'Growth'] },
+  trust: {
+    title: 'Why Businesses Choose Us',
+    items: {
+      performance: 'High-performance architecture',
+      technology: 'Modern web technologies',
+      custom: 'Custom development approach',
+      delivery: 'Fast project delivery'
+    }
+  },
   faq: {
     title: 'FAQ',
     items: [

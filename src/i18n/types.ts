@@ -78,6 +78,15 @@ export type Dictionary = {
   whyUs: { title: string; points: string[] };
   stack: { title: string; items: string[] };
   process: { title: string; steps: string[] };
+  trust: {
+    title: string;
+    items: {
+      performance: string;
+      technology: string;
+      custom: string;
+      delivery: string;
+    };
+  };
   faq: { title: string; items: { q: string; a: string }[] };
   consultation: {
     title: string;
