@@ -1,4 +1,5 @@
 import Calculator from '@/components/Calculator';
+import ConsultationSection from '@/components/ConsultationSection';
 import ContactForm from '@/components/ContactForm';
 import FAQ from '@/components/FAQ';
 import Hero from '@/components/Hero';
@@ -46,6 +47,7 @@ export default async function HomePage({ params }: { params: { lang: string } })
 
       <Calculator />
       <ProcessSteps />
+      <ConsultationSection />
 
       <section id="contact" className="grid gap-8 lg:grid-cols-2 lg:items-start">
         <div>

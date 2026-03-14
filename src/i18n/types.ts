@@ -79,6 +79,12 @@ export type Dictionary = {
   stack: { title: string; items: string[] };
   process: { title: string; steps: string[] };
   faq: { title: string; items: { q: string; a: string }[] };
+  consultation: {
+    title: string;
+    subtitle: string;
+    benefits: string[];
+    cta: string;
+  };
   contact: {
     title: string;
     subtitle: string;
