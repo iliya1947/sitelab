@@ -1,4 +1,7 @@
+'use client';
+
 import Reveal from '@/components/Reveal';
+import { useTranslations } from '@/src/hooks/useTranslations';
 
 const technologies = [
   { name: 'Next.js', icon: '▲' },
@@ -10,12 +13,14 @@ const technologies = [
 ];
 
 export default function TechStackSection() {
+  const t = useTranslations();
+
   return (
     <section id="tech-stack">
       <Reveal>
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Built With Modern Technologies</h2>
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t.techStack.title}</h2>
         <p className="mt-3 max-w-3xl text-slate-300">
-          We build websites using modern tools focused on speed, scalability and performance.
+          {t.techStack.subtitle}
         </p>
       </Reveal>
 

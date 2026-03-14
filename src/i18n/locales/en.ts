@@ -30,6 +30,7 @@ export const en: Dictionary = {
   },
   audiences: { title: 'Who we work with', items: ['Startups', 'Local businesses', 'Consultants', 'Growing teams'] },
   servicesSection: { title: 'Our services', cta: 'See all services' },
+  techStack: { title: 'Built With Modern Technologies', subtitle: 'We build websites using modern tools focused on speed, scalability and performance.' },
   services: {
     title: 'Our Services',
     learnMore: 'Learn more →',
