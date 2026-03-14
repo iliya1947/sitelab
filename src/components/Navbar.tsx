@@ -32,6 +32,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   const pathname = usePathname();
   const router = useRouter();
   const [isNavVisible, setIsNavVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
   const isTicking = useRef(false);
@@ -42,6 +43,8 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
     const updateVisibility = () => {
       const currentScrollY = window.scrollY;
       const delta = currentScrollY - lastScrollY.current;
+
+      setIsScrolled(currentScrollY > 16);
 
       if (delta > 8 && currentScrollY > 20 && !mobileMenuOpen) {
         setIsNavVisible(false);
@@ -105,9 +108,13 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
   };
 
   return (
-    <header className="navbar-wrapper pointer-events-none fixed left-0 right-0 top-5 z-[1000] flex flex-col items-center justify-center md:flex-row">
+    <header className="navbar-wrapper pointer-events-none fixed left-0 right-0 top-0 z-[1000] flex flex-col items-center justify-center md:flex-row">
       <div
-        className={`navbar-container pointer-events-auto relative flex w-[calc(100%-32px)] max-w-[1080px] items-center justify-between rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(12,16,30,0.55)] px-4 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.35),0_0_20px_rgba(80,120,255,0.12),inset_0_1px_0_rgba(255,255,255,0.05)] md:rounded-full md:px-6 md:py-3 backdrop-blur-[20px] [transition:transform_.35s_cubic-bezier(.4,0,.2,1),opacity_.25s_ease] ${
+        className={`navbar-container pointer-events-auto relative flex items-center justify-between px-4 py-2 md:px-6 md:py-3 [transition:transform_.35s_cubic-bezier(.4,0,.2,1),opacity_.25s_ease,width_.35s_cubic-bezier(.4,0,.2,1),max-width_.35s_cubic-bezier(.4,0,.2,1),background-color_.35s_cubic-bezier(.4,0,.2,1),border-color_.35s_cubic-bezier(.4,0,.2,1),border-radius_.35s_cubic-bezier(.4,0,.2,1),box-shadow_.35s_cubic-bezier(.4,0,.2,1),backdrop-filter_.35s_cubic-bezier(.4,0,.2,1),top_.35s_cubic-bezier(.4,0,.2,1)] ${
+          isScrolled
+            ? 'top-4 w-[calc(100%-32px)] max-w-[1080px] rounded-full border border-white/10 bg-black/40 shadow-lg backdrop-blur-xl'
+            : 'top-0 w-full max-w-none rounded-none border border-transparent bg-transparent shadow-none backdrop-blur-0'
+        } ${
           isNavVisible ? 'translate-y-0 opacity-100' : '-translate-y-[140%] opacity-0'
         }`}
       >
