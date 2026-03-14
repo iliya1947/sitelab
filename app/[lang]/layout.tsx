@@ -11,7 +11,7 @@ export function generateStaticParams() {
 }
 
 export default async function LangLayout({ children, params }: { children: React.ReactNode; params: { lang: string } }) {
-  if (!isLang(params.lang)) redirect('/he');
+  if (!isLang(params.lang)) redirect('/');
 
   const lang = params.lang as Locale;
   const dictionary = await getDictionary(lang);

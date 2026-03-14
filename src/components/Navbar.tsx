@@ -76,7 +76,7 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  const isHomePath = pathname === `/${lang}`;
+  const isHomePath = pathname === withLang(lang);
 
   const sectionLinks = useMemo(
     () =>
@@ -97,8 +97,10 @@ export default function Navbar({ lang, dictionary, localeLabels }: NavbarProps) 
 
     const currentPath = window.location.pathname;
     const currentHash = window.location.hash;
-    const normalizedPath = currentPath.replace(/^\/(en|ru|he)(?=\/|$)/, `/${nextLocale}`);
-    router.push(`${normalizedPath}${currentHash}`);
+    const pathWithoutLocale = currentPath.replace(/^\/(en|ru)(?=\/|$)/, '') || '/';
+    const nextPath = nextLocale === 'he' ? pathWithoutLocale : `/${nextLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
+
+    router.push(`${nextPath}${currentHash}`);
     setMobileMenuOpen(false);
   };
 
