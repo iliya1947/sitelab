@@ -5,6 +5,7 @@ import Hero from '@/components/Hero';
 import ProcessSteps from '@/components/ProcessSteps';
 import Reveal from '@/components/Reveal';
 import ServicesOverview from '@/components/ServicesOverview';
+import TechStackSection from '@/components/TechStackSection';
 import { withLang } from '@/lib/routes';
 import { buildMetadata } from '@/lib/seo';
 import { getDictionary, isLocale, Locale } from '@/src/i18n';
@@ -27,6 +28,8 @@ export default async function HomePage({ params }: { params: { lang: string } })
   return (
     <>
       <Hero lang={lang} />
+
+      <TechStackSection />
 
       <section id="services">
         <Reveal className="mb-6 flex items-center justify-between gap-4">
