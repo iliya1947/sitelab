@@ -32,3 +32,40 @@
 - Do not refactor unrelated code
 - Do not remove existing functionality
 - Keep PRs small and focused
+
+## 7. Translations (STRICT RULE)
+
+All user-visible text must use the existing i18n system.
+
+Hardcoded text inside React components is strictly forbidden.
+
+When creating a new section or component:
+
+1. Create translation keys first.
+2. Add translations for ALL supported languages:
+   - he
+   - en
+   - ru
+3. Use the translation hook/function already used in the project.
+
+Example:
+
+Wrong:
+
+```tsx
+<h2>Built With Modern Technologies</h2>
+```
+
+Correct:
+
+```tsx
+<h2>{t.techStack.title}</h2>
+```
+
+And define translations in:
+
+- src/i18n/locales/en
+- src/i18n/locales/he
+- src/i18n/locales/ru
+
+If a PR introduces hardcoded UI text it must be rejected.
