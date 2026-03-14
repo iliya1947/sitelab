@@ -58,6 +58,12 @@ export const en: Dictionary = {
       { q: 'Can you build multilingual websites?', a: 'Yes, we support Hebrew, English, Russian, and additional locales.' }
     ]
   },
+  consultation: {
+    title: 'Free Website Consultation',
+    subtitle: 'Get expert advice and a clear plan for your website project.',
+    benefits: ['Project strategy advice', 'Technology recommendations', 'Cost estimation', 'Timeline planning'],
+    cta: 'Book Free Consultation'
+  },
   contact: { title: 'Start your project', subtitle: 'Tell us what you need and we will send a clear plan with estimate.', submit: 'Send', name: 'Name', email: 'Email', message: 'Project details', success: 'Thanks! We will contact you soon.' },
   accessibility: { title: 'Accessibility', contrast: 'High contrast', largerText: 'Larger text', reduceMotion: 'Reduce motion', skipToMain: 'Skip to content' },
   servicePage: { audienceTitle: 'Best for', includesTitle: 'What is included', technologiesTitle: 'Technologies', demoTitle: 'Interface demo', demoPlaceholder: 'Demo block placeholder for', stepsTitle: 'Development process', cta: 'Book a call', priceFromLabel: 'Starting from' }
