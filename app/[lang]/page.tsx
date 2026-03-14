@@ -6,6 +6,7 @@ import ProcessSteps from '@/components/ProcessSteps';
 import Reveal from '@/components/Reveal';
 import ServicesOverview from '@/components/ServicesOverview';
 import TechStackSection from '@/components/TechStackSection';
+import TrustSection from '@/components/TrustSection';
 import { withLang } from '@/lib/routes';
 import { buildMetadata } from '@/lib/seo';
 import { getDictionary, isLocale, Locale } from '@/src/i18n';
@@ -40,6 +41,8 @@ export default async function HomePage({ params }: { params: { lang: string } })
         </Reveal>
         <ServicesOverview lang={lang} compact />
       </section>
+
+      <TrustSection />
 
       <Calculator />
       <ProcessSteps />
