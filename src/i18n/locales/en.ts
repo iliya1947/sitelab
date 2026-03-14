@@ -30,6 +30,10 @@ export const en: Dictionary = {
   },
   audiences: { title: 'Who we work with', items: ['Startups', 'Local businesses', 'Consultants', 'Growing teams'] },
   servicesSection: { title: 'Our services', cta: 'See all services' },
+  servicesPage: {
+    title: 'Our Web Development Services',
+    description: 'We design and build high-performance websites focused on speed, SEO visibility and conversion.'
+  },
   techStack: { title: 'Built With Modern Technologies', subtitle: 'We build websites using modern tools focused on speed, scalability and performance.' },
   services: {
     title: 'Our Services',
