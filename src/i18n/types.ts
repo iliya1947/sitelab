@@ -7,6 +7,8 @@ export type ServiceInfo = {
   icon: string;
   title: string;
   shortDescription: string;
+  longDescription: string;
+  features: string[];
   offer: string;
   audience: string[];
   includes: string[];
