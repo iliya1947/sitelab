@@ -78,5 +78,5 @@ export const ru: Dictionary = {
   },
   contact: { title: 'Обсудим ваш проект', subtitle: 'Опишите задачу — предложим понятный план и оценку.', submit: 'Отправить', name: 'Имя', email: 'Email', message: 'Описание проекта', success: 'Спасибо! Мы скоро свяжемся с вами.' },
   accessibility: { title: 'Доступность', contrast: 'Высокий контраст', largerText: 'Увеличить шрифт', reduceMotion: 'Уменьшить анимации', skipToMain: 'Перейти к контенту' },
-  servicePage: { audienceTitle: 'Для кого подходит', includesTitle: 'Что входит', technologiesTitle: 'Технологии', demoTitle: 'Демо интерфейса', demoPlaceholder: 'Демо-блок для интерфейса', stepsTitle: 'Этапы разработки', cta: 'Записаться на звонок', priceFromLabel: 'Цена от' }
+  servicePage: { audienceTitle: 'Для кого подходит', includesTitle: 'Что входит', technologiesTitle: 'Технологии', demoTitle: 'Демо интерфейса', demoPlaceholder: 'Демо-блок для интерфейса', stepsTitle: 'Этапы разработки', cta: 'Записаться на звонок', priceFromLabel: 'Цена от', detailsTitle: 'О сервисе', featuresTitle: 'Преимущества', quoteCta: 'Получить расчёт' }
 };

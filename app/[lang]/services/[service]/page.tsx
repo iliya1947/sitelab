@@ -31,43 +31,30 @@ export default async function ServicePage({ params }: { params: { lang: string; 
 
   return (
     <article className="space-y-8">
-      <header className="section-glow card p-8 text-white">
+      <header className="section-glow card p-8 text-white md:p-12">
         <h1 className="text-4xl font-bold tracking-tight md:text-5xl">{service.title}</h1>
-        <p className="mt-3 text-blue-100">{service.offer}</p>
+        <p className="mt-4 max-w-3xl text-lg text-blue-100">{service.shortDescription}</p>
       </header>
 
-      <section>
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.audienceTitle}</h2>
-        <ul className="mt-3 list-disc space-y-1 ps-6">{service.audience.map((item) => <li key={item}>{item}</li>)}</ul>
+      <section className="card p-6 md:p-8">
+        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.servicePage.detailsTitle}</h2>
+        <p className="mt-4 text-slate-200">{service.longDescription}</p>
       </section>
 
-      <section>
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.includesTitle}</h2>
-        <ul className="mt-3 list-disc space-y-1 ps-6">{service.includes.map((item) => <li key={item}>{item}</li>)}</ul>
-      </section>
-
-      <section>
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.technologiesTitle}</h2>
-        <div className="mt-3 flex flex-wrap gap-2">{service.technologies.map((item) => <span className="card rounded-full px-3 py-1" key={item}>{item}</span>)}</div>
-      </section>
-
-      <section>
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.demoTitle}</h2>
-        <div className="card mt-3 border-dashed p-8 text-slate-300">{dictionary.servicePage.demoPlaceholder} {service.title}.</div>
-      </section>
-
-      <section>
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{dictionary.servicePage.stepsTitle}</h2>
-        <ol className="mt-3 grid gap-3 md:grid-cols-2">
-          {service.steps.map((step, i) => (
-            <li key={step} className="card p-4">{i + 1}. {step}</li>
+      <section className="card p-6 md:p-8">
+        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.servicePage.featuresTitle}</h2>
+        <ul className="mt-4 list-disc space-y-2 ps-6 text-slate-200">
+          {service.features.map((feature) => (
+            <li key={feature}>{feature}</li>
           ))}
-        </ol>
+        </ul>
       </section>
 
-      <section className="card p-6">
+      <section className="card p-6 md:p-8">
         <p className="text-xl font-semibold">{dictionary.servicePage.priceFromLabel}: <span className="price-highlight">{service.priceFrom}</span></p>
-        <Link href={withLang(lang, '/contact')} className="primary-btn mt-4 inline-flex">{dictionary.servicePage.cta}</Link>
+        <Link href={withLang(lang, '/calculator#calculator')} className="primary-btn mt-4 inline-flex">
+          {dictionary.servicePage.quoteCta}
+        </Link>
       </section>
     </article>
   );
