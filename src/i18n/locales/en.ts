@@ -87,5 +87,5 @@ export const en: Dictionary = {
   },
   contact: { title: 'Start your project', subtitle: 'Tell us what you need and we will send a clear plan with estimate.', submit: 'Send', name: 'Name', email: 'Email', message: 'Project details', success: 'Thanks! We will contact you soon.' },
   accessibility: { title: 'Accessibility', contrast: 'High contrast', largerText: 'Larger text', reduceMotion: 'Reduce motion', skipToMain: 'Skip to content' },
-  servicePage: { audienceTitle: 'Best for', includesTitle: 'What is included', technologiesTitle: 'Technologies', demoTitle: 'Interface demo', demoPlaceholder: 'Demo block placeholder for', stepsTitle: 'Development process', cta: 'Book a call', priceFromLabel: 'Starting from' }
+  servicePage: { audienceTitle: 'Best for', includesTitle: 'What is included', technologiesTitle: 'Technologies', demoTitle: 'Interface demo', demoPlaceholder: 'Demo block placeholder for', stepsTitle: 'Development process', cta: 'Book a call', priceFromLabel: 'Starting from', detailsTitle: 'Service details', featuresTitle: 'Features', quoteCta: 'Get a Quote' }
 };

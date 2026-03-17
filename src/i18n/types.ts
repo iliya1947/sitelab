@@ -125,6 +125,9 @@ export type Dictionary = {
     stepsTitle: string;
     cta: string;
     priceFromLabel: string;
+    detailsTitle: string;
+    featuresTitle: string;
+    quoteCta: string;
   };
 };
 

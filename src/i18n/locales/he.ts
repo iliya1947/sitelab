@@ -78,5 +78,5 @@ export const he: Dictionary = {
   },
   contact: { title: 'בואו נתחיל את הפרויקט שלכם', subtitle: 'ספרו לנו מה אתם צריכים ונחזור עם תוכנית ברורה והערכת מחיר.', submit: 'שליחה', name: 'שם', email: 'אימייל', message: 'פרטי הפרויקט', success: 'תודה! נחזור אליכם בקרוב.' },
   accessibility: { title: 'נגישות', contrast: 'ניגודיות גבוהה', largerText: 'הגדלת טקסט', reduceMotion: 'הפחתת אנימציות', skipToMain: 'דילוג לתוכן הראשי' },
-  servicePage: { audienceTitle: 'למי זה מתאים', includesTitle: 'מה כלול', technologiesTitle: 'טכנולוגיות', demoTitle: 'הדגמת ממשק', demoPlaceholder: 'בלוק הדגמה עבור ממשק', stepsTitle: 'שלבי העבודה', cta: 'לתיאום שיחה', priceFromLabel: 'החל מ-' }
+  servicePage: { audienceTitle: 'למי זה מתאים', includesTitle: 'מה כלול', technologiesTitle: 'טכנולוגיות', demoTitle: 'הדגמת ממשק', demoPlaceholder: 'בלוק הדגמה עבור ממשק', stepsTitle: 'שלבי העבודה', cta: 'לתיאום שיחה', priceFromLabel: 'החל מ-', detailsTitle: 'פירוט השירות', featuresTitle: 'פיצ׳רים', quoteCta: 'קבלו הצעת מחיר' }
 };
