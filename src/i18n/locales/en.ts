@@ -56,8 +56,22 @@ export const en: Dictionary = {
     title: 'Website cost calculator',
     submit: 'Send request',
     estimateLabel: 'Estimated budget',
-    fields: { siteType: 'Website type', pages: 'Number of pages', multilingual: 'Multilingual', ecommerce: 'Online store', seo: 'SEO package', urgency: 'Urgency' },
-    siteTypes: { landing: 'Landing', corporate: 'Corporate', ecommerce: 'E-commerce', webapp: 'Web app' }
+    estimateRangeLabel: 'Estimated price range',
+    summaryTitle: 'Project summary',
+    summaryEmpty: 'No additional features selected yet.',
+    selectedTypeLabel: 'Website type',
+    selectedFeaturesLabel: 'Selected features',
+    finalPriceLabel: 'Final estimated price',
+    currencySymbol: '₪',
+    fields: { siteType: 'Website type', pages: 'Number of pages', features: 'Feature options' },
+    siteTypes: { landingPage: 'Landing Page', businessWebsite: 'Business Website', webApplication: 'Web Application' },
+    features: {
+      seoOptimization: 'SEO Optimization',
+      multiLanguageSupport: 'Multi-language support',
+      advancedAnimations: 'Advanced animations',
+      cmsIntegration: 'CMS integration',
+      customIntegrations: 'Custom integrations'
+    }
   },
   whyUs: { title: 'Why teams choose SiteLab', points: ['Transparent pricing', 'Fast iterations', 'Accessible interfaces', 'Production-ready codebase'] },
   stack: { title: 'Technology stack', items: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Vercel'] },

@@ -53,9 +53,25 @@ export const he: Dictionary = {
     ]
   },
   calculator: {
-    title: 'מחשבון עלות אתר', submit: 'שליחת פנייה', estimateLabel: 'תקציב משוער',
-    fields: { siteType: 'סוג אתר', pages: 'מספר עמודים', multilingual: 'רב-לשוני', ecommerce: 'חנות אונליין', seo: 'חבילת SEO', urgency: 'דחיפות' },
-    siteTypes: { landing: 'דף נחיתה', corporate: 'אתר תדמית', ecommerce: 'חנות אונליין', webapp: 'אפליקציית ווב' }
+    title: 'מחשבון עלות אתר',
+    submit: 'שליחת פנייה',
+    estimateLabel: 'תקציב משוער',
+    estimateRangeLabel: 'טווח מחיר משוער',
+    summaryTitle: 'סיכום הפרויקט',
+    summaryEmpty: 'עדיין לא נבחרו פיצ׳רים נוספים.',
+    selectedTypeLabel: 'סוג האתר',
+    selectedFeaturesLabel: 'פיצ׳רים שנבחרו',
+    finalPriceLabel: 'מחיר סופי משוער',
+    currencySymbol: '₪',
+    fields: { siteType: 'סוג אתר', pages: 'מספר עמודים', features: 'אפשרויות פיצ׳רים' },
+    siteTypes: { landingPage: 'דף נחיתה', businessWebsite: 'אתר עסקי', webApplication: 'אפליקציית ווב' },
+    features: {
+      seoOptimization: 'אופטימיזציית SEO',
+      multiLanguageSupport: 'תמיכה בריבוי שפות',
+      advancedAnimations: 'אנימציות מתקדמות',
+      cmsIntegration: 'אינטגרציית CMS',
+      customIntegrations: 'אינטגרציות מותאמות'
+    }
   },
   whyUs: { title: 'למה בוחרים ב-SiteLab', points: ['תמחור שקוף', 'איטרציות מהירות', 'ממשקים נגישים', 'קוד מוכן לצמיחה'] },
   stack: { title: 'הטכנולוגיות שלנו', items: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Vercel'] },

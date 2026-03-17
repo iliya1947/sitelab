@@ -53,9 +53,25 @@ export const ru: Dictionary = {
     ]
   },
   calculator: {
-    title: 'Калькулятор стоимости сайта', submit: 'Отправить заявку', estimateLabel: 'Оценка бюджета',
-    fields: { siteType: 'Тип сайта', pages: 'Количество страниц', multilingual: 'Мультиязычность', ecommerce: 'Интернет-магазин', seo: 'SEO пакет', urgency: 'Срочность' },
-    siteTypes: { landing: 'Лендинг', corporate: 'Корпоративный', ecommerce: 'E-commerce', webapp: 'Веб-приложение' }
+    title: 'Калькулятор стоимости сайта',
+    submit: 'Отправить заявку',
+    estimateLabel: 'Оценка бюджета',
+    estimateRangeLabel: 'Оценочный диапазон цены',
+    summaryTitle: 'Сводка проекта',
+    summaryEmpty: 'Дополнительные функции пока не выбраны.',
+    selectedTypeLabel: 'Тип сайта',
+    selectedFeaturesLabel: 'Выбранные функции',
+    finalPriceLabel: 'Итоговая оценка стоимости',
+    currencySymbol: '₪',
+    fields: { siteType: 'Тип сайта', pages: 'Количество страниц', features: 'Опции функций' },
+    siteTypes: { landingPage: 'Лендинг', businessWebsite: 'Бизнес-сайт', webApplication: 'Веб-приложение' },
+    features: {
+      seoOptimization: 'SEO-оптимизация',
+      multiLanguageSupport: 'Мультиязычность',
+      advancedAnimations: 'Продвинутые анимации',
+      cmsIntegration: 'Интеграция CMS',
+      customIntegrations: 'Кастомные интеграции'
+    }
   },
   whyUs: { title: 'Почему выбирают SiteLab', points: ['Прозрачные цены', 'Быстрые итерации', 'Доступные интерфейсы', 'Код готов к развитию'] },
   stack: { title: 'Технологический стек', items: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Vercel'] },
