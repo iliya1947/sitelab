@@ -66,19 +66,29 @@ export type Dictionary = {
     title: string;
     submit: string;
     estimateLabel: string;
+    estimateRangeLabel: string;
+    summaryTitle: string;
+    summaryEmpty: string;
+    selectedTypeLabel: string;
+    selectedFeaturesLabel: string;
+    finalPriceLabel: string;
+    currencySymbol: string;
     fields: {
       siteType: string;
       pages: string;
-      multilingual: string;
-      ecommerce: string;
-      seo: string;
-      urgency: string;
+      features: string;
     };
     siteTypes: {
-      landing: string;
-      corporate: string;
-      ecommerce: string;
-      webapp: string;
+      landingPage: string;
+      businessWebsite: string;
+      webApplication: string;
+    };
+    features: {
+      seoOptimization: string;
+      multiLanguageSupport: string;
+      advancedAnimations: string;
+      cmsIntegration: string;
+      customIntegrations: string;
     };
   };
   whyUs: { title: string; points: string[] };
