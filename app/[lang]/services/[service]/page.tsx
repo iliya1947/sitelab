@@ -2,6 +2,7 @@ import { buildMetadata } from '@/lib/seo';
 import { withLang } from '@/lib/routes';
 import { getDictionary, isLocale, locales, Locale } from '@/src/i18n';
 import Link from 'next/link';
+import ServiceHero from '@/components/services/ServiceHero';
 import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
@@ -21,6 +22,27 @@ export async function generateMetadata({ params }: { params: { lang: string; ser
   return buildMetadata({ lang, title: `${dictionary.siteName} | ${service.title}`, description: service.shortDescription, path: `/services/${service.slug}` });
 }
 
+
+
+const createHeroImage = (title: string, index: number) => {
+  const hue = (index * 55 + 190) % 360;
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="hsl(${hue} 88% 56%)"/>
+          <stop offset="100%" stop-color="hsl(${(hue + 70) % 360} 78% 44%)"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="700" fill="url(#g)"/>
+      <circle cx="990" cy="130" r="220" fill="rgba(255,255,255,.18)"/>
+      <text x="70" y="620" font-size="72" font-family="Inter, Arial, sans-serif" fill="white">${title}</text>
+    </svg>
+  `;
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+};
+
 export default async function ServicePage({ params }: { params: { lang: string; service: string } }) {
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang as Locale;
@@ -28,6 +50,8 @@ export default async function ServicePage({ params }: { params: { lang: string; 
   const service = dictionary.services.items.find((item) => item.slug === params.service);
 
   if (!service) notFound();
+
+  const heroImages = [0, 1, 2].map((index) => createHeroImage(service.title, index));
 
   const processSteps = [
     dictionary.process.steps[0],
@@ -38,14 +62,13 @@ export default async function ServicePage({ params }: { params: { lang: string; 
 
   return (
     <article className="space-y-8 md:space-y-10">
-      <header className="section-glow card p-8 text-white md:p-12">
-        <p className="text-sm uppercase tracking-[0.2em] text-blue-200">{dictionary.servicesSection.title}</p>
-        <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">{service.title}</h1>
-        <p className="mt-4 max-w-3xl text-lg text-blue-100">{service.shortDescription}</p>
-        <Link href={withLang(lang, '/calculator#calculator')} className="primary-btn mt-8 inline-flex">
+      <ServiceHero title={service.title} shortDescription={service.shortDescription} images={heroImages} />
+
+      <div className="-mt-2">
+        <Link href={withLang(lang, '/calculator#calculator')} className="primary-btn inline-flex">
           {dictionary.hero.ctaSecondary}
         </Link>
-      </header>
+      </div>
 
       <section className="card p-6 md:p-8">
         <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.consultation.title}</h2>
