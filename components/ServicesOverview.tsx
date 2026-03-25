@@ -26,8 +26,8 @@ export default function ServicesOverview({ lang, compact = false }: ServicesOver
               aria-hidden
             />
 
-            <div className="relative inline-flex rounded-xl border border-white/10 bg-slate-900/90 p-3 text-3xl transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-3 group-hover:scale-110 group-hover:border-cyan-300/50 group-hover:shadow-[0_0_24px_rgba(34,211,238,0.35)]" aria-hidden>
-              {service.icon}
+            <div className="relative inline-flex h-14 w-14 items-center justify-center rounded-xl border border-white/10 bg-slate-900/90 text-xl font-semibold text-cyan-200 transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-3 group-hover:scale-110 group-hover:border-cyan-300/50 group-hover:shadow-[0_0_24px_rgba(34,211,238,0.35)]" aria-hidden>
+              {service.title.charAt(0).toUpperCase()}
             </div>
 
             <h3 className="relative mt-5 text-xl font-semibold tracking-tight text-white">{service.title}</h3>

@@ -4,16 +4,10 @@ export type Locale = (typeof locales)[number];
 
 export type ServiceInfo = {
   slug: string;
-  icon: string;
   title: string;
   shortDescription: string;
   longDescription: string;
   features: string[];
-  offer: string;
-  audience: string[];
-  includes: string[];
-  technologies: string[];
-  steps: string[];
   priceFrom: string;
 };
 
