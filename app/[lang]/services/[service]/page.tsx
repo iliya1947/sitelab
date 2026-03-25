@@ -29,32 +29,70 @@ export default async function ServicePage({ params }: { params: { lang: string; 
 
   if (!service) notFound();
 
+  const processSteps = [
+    dictionary.process.steps[0],
+    dictionary.process.steps[2],
+    dictionary.process.steps[3],
+    dictionary.process.steps[4]
+  ];
+
   return (
-    <article className="space-y-8">
+    <article className="space-y-8 md:space-y-10">
       <header className="section-glow card p-8 text-white md:p-12">
-        <h1 className="text-4xl font-bold tracking-tight md:text-5xl">{service.title}</h1>
+        <p className="text-sm uppercase tracking-[0.2em] text-blue-200">{dictionary.servicesSection.title}</p>
+        <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">{service.title}</h1>
         <p className="mt-4 max-w-3xl text-lg text-blue-100">{service.shortDescription}</p>
+        <Link href={withLang(lang, '/calculator#calculator')} className="primary-btn mt-8 inline-flex">
+          {dictionary.hero.ctaSecondary}
+        </Link>
       </header>
 
       <section className="card p-6 md:p-8">
-        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.servicePage.detailsTitle}</h2>
-        <p className="mt-4 text-slate-200">{service.longDescription}</p>
-      </section>
-
-      <section className="card p-6 md:p-8">
-        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.servicePage.featuresTitle}</h2>
-        <ul className="mt-4 list-disc space-y-2 ps-6 text-slate-200">
-          {service.features.map((feature) => (
-            <li key={feature}>{feature}</li>
+        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.consultation.title}</h2>
+        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+          {dictionary.consultation.benefits.slice(0, 4).map((benefit) => (
+            <li key={benefit} className="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-slate-100">
+              {benefit}
+            </li>
           ))}
         </ul>
       </section>
 
       <section className="card p-6 md:p-8">
-        <p className="text-xl font-semibold">{dictionary.servicePage.priceFromLabel}: <span className="price-highlight">{service.priceFrom}</span></p>
-        <Link href={withLang(lang, '/calculator#calculator')} className="primary-btn mt-4 inline-flex">
-          {dictionary.servicePage.quoteCta}
-        </Link>
+        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.servicePage.featuresTitle}</h2>
+        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+          {service.features.map((feature) => (
+            <li key={feature} className="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-slate-100">
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="card p-6 md:p-8">
+        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.process.title}</h2>
+        <ol className="mt-6 grid gap-4 md:grid-cols-4">
+          {processSteps.map((step, index) => (
+            <li key={step} className="rounded-2xl border border-white/10 bg-slate-900/60 p-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{String(index + 1).padStart(2, '0')}</p>
+              <p className="mt-2 text-lg font-medium text-white">{step}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="section-glow card p-6 md:p-8">
+        <p className="text-xl font-semibold text-white">
+          {dictionary.servicePage.priceFromLabel}: <span className="price-highlight">{service.priceFrom}</span>
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link href={withLang(lang, '/contact')} className="primary-btn inline-flex">
+            {dictionary.hero.ctaPrimary}
+          </Link>
+          <Link href={withLang(lang, '/calculator#calculator')} className="secondary-btn inline-flex">
+            {dictionary.hero.ctaSecondary}
+          </Link>
+        </div>
       </section>
     </article>
   );
