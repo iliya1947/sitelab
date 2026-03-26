@@ -45,21 +45,27 @@ export default function ServiceHero({ title, shortDescription, images }: Service
             <p className="mt-4 max-w-3xl text-lg text-blue-100">{shortDescription}</p>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/60 shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/60 shadow-xl shadow-black/40">
             <div className="pointer-events-none absolute left-1/2 top-1/2 z-[1] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.45),rgba(14,116,144,0))] blur-2xl" />
 
             <div className="relative h-56 md:h-64">
               {slides.map((image, index) => (
                 <div
                   key={`${image}-${index}`}
-                  className={`absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out ${
-                    index === activeIndex ? 'scale-[1.03] opacity-100' : 'scale-100 opacity-0'
+                  className={`absolute inset-0 bg-cover bg-center transition-[opacity,transform] duration-1000 ease-in-out will-change-transform ${
+                    index === activeIndex ? 'scale-[1.06] opacity-100' : 'scale-100 opacity-0'
                   }`}
                   style={{ backgroundImage: `url(${image})` }}
                 />
               ))}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-slate-950/35" />
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/15 via-transparent to-blue-600/15" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/30 to-transparent" />
+
+              <div className="absolute bottom-4 left-4 right-4 z-[2] rounded-xl border border-white/10 bg-slate-950/35 p-3 backdrop-blur-sm">
+                <p className="text-sm font-semibold text-white">Example Project</p>
+                <p className="mt-0.5 text-xs text-blue-100/90">small caption</p>
+              </div>
             </div>
 
             {slides.length > 1 && (
