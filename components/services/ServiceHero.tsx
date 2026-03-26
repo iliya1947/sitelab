@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type ServiceHeroProps = {
   title: string;
@@ -9,11 +9,18 @@ type ServiceHeroProps = {
 };
 
 export default function ServiceHero({ title, shortDescription, images }: ServiceHeroProps) {
-  const slides = useMemo(() => (images.length > 0 ? images : ['/images/service-fallback.svg']), [images]);
+  const slides = images.length > 0 ? images : ['/images/service-fallback.svg'];
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    if (activeIndex >= slides.length) {
+      setActiveIndex(0);
+    }
+  }, [activeIndex, slides.length]);
+
+  useEffect(() => {
     if (slides.length <= 1) return;
+
     const timer = setInterval(() => {
       setActiveIndex((current) => (current + 1) % slides.length);
     }, 4500);
