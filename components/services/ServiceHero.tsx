@@ -21,10 +21,12 @@ export default function ServiceHero({ title, shortDescription, images }: Service
   return (
     <header className="section-glow card premium-hero relative overflow-hidden p-8 text-white md:p-12">
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute -left-24 top-[-7rem] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.28),rgba(14,116,144,0))] blur-2xl" />
-        <div className="absolute right-[-4.5rem] top-[18%] h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.3),rgba(37,99,235,0))] blur-3xl" />
-        <div className="absolute bottom-[-7rem] left-[20%] h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.2),rgba(14,116,144,0))] blur-3xl" />
-        <div className="noise-layer absolute inset-0 opacity-[0.16]" />
+        <div className="absolute -left-24 top-[-7rem] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.2),rgba(14,116,144,0))] blur-2xl" />
+        <div className="absolute right-[-4.5rem] top-[18%] h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.18),rgba(37,99,235,0))] blur-3xl" />
+        <div className="absolute bottom-[-7rem] left-[20%] h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.14),rgba(14,116,144,0))] blur-3xl" />
+        <div className="absolute -right-16 top-1/2 h-44 w-44 -translate-y-1/2 rounded-full bg-cyan-300/10 blur-3xl" />
+        <div className="beam-layer absolute inset-y-[-15%] left-[48%] w-px -rotate-[16deg]" />
+        <div className="noise-layer absolute inset-0 opacity-[0.08]" />
       </div>
 
       <div className="relative z-[1] rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_28px_80px_rgba(2,6,23,0.35)] backdrop-blur-xl md:p-8">
@@ -36,7 +38,7 @@ export default function ServiceHero({ title, shortDescription, images }: Service
           </div>
 
           <div className="relative">
-            <div className="pointer-events-none absolute -inset-6 z-0 rounded-[2rem] bg-[radial-gradient(circle,rgba(34,211,238,0.34),rgba(14,116,144,0))] blur-2xl" />
+            <div className="pointer-events-none absolute -inset-8 z-0 rounded-[2rem] bg-[radial-gradient(circle,rgba(34,211,238,0.42),rgba(14,116,144,0)_68%)] blur-2xl" />
 
             <div className="relative z-[1] mx-auto w-full max-w-xl rotate-[-2.5deg]">
               <div className="rounded-[1.3rem] border border-white/20 bg-slate-900/85 p-2 shadow-xl shadow-black/45 backdrop-blur">
@@ -105,6 +107,20 @@ export default function ServiceHero({ title, shortDescription, images }: Service
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
           background-size: 180px 180px;
           mix-blend-mode: soft-light;
+        }
+
+        .beam-layer {
+          background: linear-gradient(
+            180deg,
+            rgba(34, 211, 238, 0) 0%,
+            rgba(34, 211, 238, 0.2) 28%,
+            rgba(59, 130, 246, 0.28) 54%,
+            rgba(59, 130, 246, 0.08) 70%,
+            rgba(59, 130, 246, 0) 100%
+          );
+          box-shadow: 0 0 36px rgba(56, 189, 248, 0.26);
+          opacity: 0.75;
+          will-change: opacity;
         }
       `}</style>
     </header>
