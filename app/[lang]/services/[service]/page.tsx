@@ -41,60 +41,80 @@ export default async function ServicePage({ params }: { params: { lang: string; 
   ];
 
   return (
-    <article className="space-y-8 md:space-y-10">
-      <ServiceHero title={service.title} shortDescription={service.shortDescription} images={heroImages} />
+    <article className="overflow-hidden rounded-3xl border border-white/10">
+      <section className="bg-slate-950 px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto max-w-4xl space-y-8">
+          <ServiceHero title={service.title} shortDescription={service.shortDescription} images={heroImages} />
+          <div>
+            <Link href={withLang(lang, '/calculator#calculator')} className="primary-btn inline-flex">
+              {dictionary.hero.ctaSecondary}
+            </Link>
+          </div>
+        </div>
+      </section>
 
-      <div className="-mt-2">
-        <Link href={withLang(lang, '/calculator#calculator')} className="primary-btn inline-flex">
-          {dictionary.hero.ctaSecondary}
-        </Link>
-      </div>
-
-      <section className="card p-6 md:p-8">
-        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.consultation.title}</h2>
-        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+      <section className="border-y border-white/10 bg-gradient-to-b from-slate-900 to-slate-950 px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-white md:text-4xl">{dictionary.consultation.title}</h2>
+          <ul className="mt-10 grid gap-5 md:grid-cols-2">
           {dictionary.consultation.benefits.slice(0, 4).map((benefit) => (
-            <li key={benefit} className="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-slate-100">
+            <li
+              key={benefit}
+              className="rounded-2xl border border-white/10 bg-slate-900/60 p-6 text-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-slate-800/70"
+            >
               {benefit}
             </li>
           ))}
-        </ul>
+          </ul>
+        </div>
       </section>
 
-      <section className="card p-6 md:p-8">
-        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.servicePage.featuresTitle}</h2>
-        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+      <section className="border-b border-white/10 bg-slate-950 px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-white md:text-4xl">{dictionary.servicePage.featuresTitle}</h2>
+          <ul className="mt-10 grid gap-5 md:grid-cols-2">
           {service.features.map((feature) => (
-            <li key={feature} className="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-slate-100">
+            <li
+              key={feature}
+              className="rounded-2xl border border-white/10 bg-slate-900/60 p-6 text-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-slate-800/70"
+            >
               {feature}
             </li>
           ))}
-        </ul>
+          </ul>
+        </div>
       </section>
 
-      <section className="card p-6 md:p-8">
-        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{dictionary.process.title}</h2>
-        <ol className="mt-6 grid gap-4 md:grid-cols-4">
+      <section className="border-b border-white/10 bg-gradient-to-b from-slate-900 to-slate-950 px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-white md:text-4xl">{dictionary.process.title}</h2>
+          <ol className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {processSteps.map((step, index) => (
-            <li key={step} className="rounded-2xl border border-white/10 bg-slate-900/60 p-4">
+            <li
+              key={step}
+              className="rounded-2xl border border-white/10 bg-slate-900/60 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-slate-800/70"
+            >
               <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{String(index + 1).padStart(2, '0')}</p>
               <p className="mt-2 text-lg font-medium text-white">{step}</p>
             </li>
           ))}
-        </ol>
+          </ol>
+        </div>
       </section>
 
-      <section className="section-glow card p-6 md:p-8">
-        <p className="text-xl font-semibold text-white">
+      <section className="section-glow bg-slate-950 px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto max-w-5xl">
+          <p className="max-w-3xl text-2xl font-semibold text-white md:text-3xl">
           {dictionary.servicePage.priceFromLabel}: <span className="price-highlight">{service.priceFrom}</span>
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link href={withLang(lang, '/contact')} className="primary-btn inline-flex">
-            {dictionary.hero.ctaPrimary}
-          </Link>
-          <Link href={withLang(lang, '/calculator#calculator')} className="secondary-btn inline-flex">
-            {dictionary.hero.ctaSecondary}
-          </Link>
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href={withLang(lang, '/contact')} className="primary-btn inline-flex">
+              {dictionary.hero.ctaPrimary}
+            </Link>
+            <Link href={withLang(lang, '/calculator#calculator')} className="secondary-btn inline-flex">
+              {dictionary.hero.ctaSecondary}
+            </Link>
+          </div>
         </div>
       </section>
     </article>
