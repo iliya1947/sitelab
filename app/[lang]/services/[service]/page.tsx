@@ -104,9 +104,13 @@ export default async function ServicePage({ params }: { params: { lang: string; 
 
       <section className="section-glow bg-slate-950 px-6 py-16 md:px-10 md:py-20">
         <div className="mx-auto max-w-5xl">
-          <p className="max-w-3xl text-2xl font-semibold text-white md:text-3xl">
-          {dictionary.servicePage.priceFromLabel}: <span className="price-highlight">{service.priceFrom}</span>
-          </p>
+          <div className="max-w-3xl space-y-2">
+            <p className="text-sm uppercase tracking-[0.18em] text-slate-400">Starting from</p>
+            <p className="text-4xl font-extrabold tracking-tight md:text-5xl">
+              <span className="bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent">{service.priceFrom}</span>
+            </p>
+            <p className="text-sm text-slate-400">Final price depends on requirements</p>
+          </div>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href={withLang(lang, '/contact')} className="primary-btn inline-flex">
               {dictionary.hero.ctaPrimary}
