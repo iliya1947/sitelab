@@ -23,26 +23,6 @@ export async function generateMetadata({ params }: { params: { lang: string; ser
 }
 
 
-
-const createHeroImage = (title: string, index: number) => {
-  const hue = (index * 55 + 190) % 360;
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
-      <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="hsl(${hue} 88% 56%)"/>
-          <stop offset="100%" stop-color="hsl(${(hue + 70) % 360} 78% 44%)"/>
-        </linearGradient>
-      </defs>
-      <rect width="1200" height="700" fill="url(#g)"/>
-      <circle cx="990" cy="130" r="220" fill="rgba(255,255,255,.18)"/>
-      <text x="70" y="620" font-size="72" font-family="Inter, Arial, sans-serif" fill="white">${title}</text>
-    </svg>
-  `;
-
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-};
-
 export default async function ServicePage({ params }: { params: { lang: string; service: string } }) {
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang as Locale;
@@ -51,7 +31,7 @@ export default async function ServicePage({ params }: { params: { lang: string; 
 
   if (!service) notFound();
 
-  const heroImages = [0, 1, 2].map((index) => createHeroImage(service.title, index));
+  const heroImages: string[] = [];
 
   const processSteps = [
     dictionary.process.steps[0],
