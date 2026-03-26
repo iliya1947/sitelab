@@ -18,16 +18,6 @@ export default function ServiceHero({ title, shortDescription, images }: Service
     }
   }, [activeIndex, slides.length]);
 
-  useEffect(() => {
-    if (slides.length <= 1) return;
-
-    const timer = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % slides.length);
-    }, 4500);
-
-    return () => clearInterval(timer);
-  }, [slides.length]);
-
   return (
     <header className="section-glow card premium-hero relative overflow-hidden p-8 text-white md:p-12">
       <div className="pointer-events-none absolute inset-0 z-0">
@@ -45,41 +35,54 @@ export default function ServiceHero({ title, shortDescription, images }: Service
             <p className="mt-4 max-w-3xl text-lg text-blue-100">{shortDescription}</p>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/60 shadow-xl shadow-black/40">
-            <div className="pointer-events-none absolute left-1/2 top-1/2 z-[1] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.45),rgba(14,116,144,0))] blur-2xl" />
+          <div className="relative">
+            <div className="pointer-events-none absolute -inset-6 z-0 rounded-[2rem] bg-[radial-gradient(circle,rgba(34,211,238,0.34),rgba(14,116,144,0))] blur-2xl" />
 
-            <div className="relative h-56 md:h-64">
-              {slides.map((image, index) => (
-                <div
-                  key={`${image}-${index}`}
-                  className={`absolute inset-0 bg-cover bg-center transition-[opacity,transform] duration-1000 ease-in-out will-change-transform ${
-                    index === activeIndex ? 'scale-[1.06] opacity-100' : 'scale-100 opacity-0'
-                  }`}
-                  style={{ backgroundImage: `url(${image})` }}
-                />
-              ))}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-slate-950/35" />
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/15 via-transparent to-blue-600/15" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/30 to-transparent" />
+            <div className="relative z-[1] mx-auto w-full max-w-xl rotate-[-2.5deg]">
+              <div className="rounded-[1.3rem] border border-white/20 bg-slate-900/85 p-2 shadow-xl shadow-black/45 backdrop-blur">
+                <div className="mb-2 flex items-center gap-1.5 rounded-lg border border-white/10 bg-slate-950/80 px-3 py-2">
+                  <span className="h-2.5 w-2.5 rounded-full bg-rose-400/90" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-amber-300/90" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/90" />
+                  <div className="ml-2 h-2.5 flex-1 rounded-full bg-white/10" />
+                </div>
 
-              <div className="absolute bottom-4 left-4 right-4 z-[2] rounded-xl border border-white/10 bg-slate-950/35 p-3 backdrop-blur-sm">
-                <p className="text-sm font-semibold text-white">Example Project</p>
-                <p className="mt-0.5 text-xs text-blue-100/90">small caption</p>
+                <div className="relative h-56 overflow-hidden rounded-lg border border-white/10 bg-slate-900 md:h-64">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${slides[activeIndex]})` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-slate-950/35" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/15 via-transparent to-blue-600/15" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/20 to-transparent" />
+
+                  <div className="absolute bottom-4 left-4 right-4 rounded-xl border border-white/10 bg-slate-950/35 p-3 backdrop-blur-sm">
+                    <p className="text-sm font-semibold text-white">Example Project</p>
+                    <p className="mt-0.5 text-xs text-blue-100/90">small caption</p>
+                  </div>
+                </div>
               </div>
             </div>
 
             {slides.length > 1 && (
-              <div className="absolute bottom-4 left-1/2 z-[3] flex -translate-x-1/2 gap-2">
-                {slides.map((_, index) => (
+              <div className="mt-5 flex flex-wrap justify-center gap-2">
+                {slides.map((image, index) => (
                   <button
                     key={`dot-${index}`}
                     type="button"
                     aria-label={`Show slide ${index + 1}`}
                     onClick={() => setActiveIndex(index)}
-                    className={`h-2.5 w-2.5 rounded-full transition ${
-                      index === activeIndex ? 'bg-cyan-300' : 'bg-white/40 hover:bg-white/60'
+                    className={`h-12 w-16 overflow-hidden rounded-md border transition ${
+                      index === activeIndex
+                        ? 'border-cyan-300 ring-2 ring-cyan-300/40'
+                        : 'border-white/20 opacity-80 hover:opacity-100'
                     }`}
-                  />
+                  >
+                    <span
+                      className="block h-full w-full bg-cover bg-center"
+                      style={{ backgroundImage: `url(${image})` }}
+                    />
+                  </button>
                 ))}
               </div>
             )}
